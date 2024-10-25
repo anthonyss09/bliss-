@@ -15,7 +15,7 @@ export default function NavbarInner({
 }) {
   return (
     <div
-      id="nav-taskbar"
+      id="navbar-inner"
       className={`w-screen h-24 px-4 flex items-center justify-between relative sm:justify-center sm:flex-col gap-2 duration-500 ease-in-out ${
         sidebarDropped ? "" : ""
       }`}

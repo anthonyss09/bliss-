@@ -13,19 +13,22 @@ export default function Navbar() {
 
   function closeNav() {
     const el = document.getElementById("navbar");
-    if (el) {
+    const navInner = document.getElementById("navbar-inner");
+    if (el && navInner) {
       el.style.height = "0";
-      el.style.overflowY = "hidden";
+      navInner.style.height = "0";
+      navInner.style.overflowY = "hidden";
     }
   }
 
   function openNav() {
     const el = document.getElementById("navbar");
-    if (el) {
+    const navInner = document.getElementById("navbar-inner");
+
+    if (el && navInner) {
       el.style.height = "96px";
-      setTimeout(() => {
-        el.style.overflowY = "visible";
-      }, 500);
+      navInner.style.height = "100%";
+      navInner.style.overflowY = "visible";
     }
   }
 
