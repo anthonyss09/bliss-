@@ -30,8 +30,9 @@ export default function BsMainItem({
           <Image
             src="/assets/svgs/chevronBlackRight.svg"
             alt="arrow right"
-            height={16}
-            width={10}
+            height={30}
+            width={17}
+            className="h-[16px] w-[auto]"
           />
         )}
       </Link>

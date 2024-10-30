@@ -3,10 +3,27 @@ import BigSidebar from "./BigSidebar";
 import { useState, useEffect, useRef } from "react";
 import LoginForm from "./LoginForm";
 import NavbarInner from "./NavbarInner";
+import {
+  useLoginCustomerQuery,
+  selectAuthData,
+} from "../../lib/features/auth/authSlice";
+import { useAppSelector } from "../../lib/hooks";
+import AccountCenter from "./AccountCenter";
 
 export default function Navbar() {
   const [sidebarDropped, setSidebarDropped] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
+
+  const { customerAccessToken, customer } = useAppSelector(selectAuthData);
+  const {
+    data: authenticationData,
+    isLoading: authenticationLoading,
+    isSuccess: authenticationSuccess,
+    isError: authenticationIsError,
+    error: authenticationError,
+  } = useLoginCustomerQuery({
+    customerAccessToken: customerAccessToken,
+  });
 
   const yPosition = useRef(0);
   const windowWidth = useRef(0);
@@ -79,8 +96,8 @@ export default function Navbar() {
   }
 
   function handleResize(e: any) {
-    setSidebarDropped(false);
     if (windowWidth.current < 660 && window.innerWidth > 660) {
+      setSidebarDropped(false);
       toggleForm(false);
       windowWidth.current = window.innerWidth;
     } else if (windowWidth.current > 660 && window.innerWidth < 660) {
@@ -107,7 +124,12 @@ export default function Navbar() {
       id="navbar"
       className={`w-screen fixed top-0 z-30  bg-white duration-700 ease-in-out`}
     >
-      <LoginForm formOpen={formOpen} toggleForm={toggleForm} />
+      {customer.id ? (
+        <AccountCenter formOpen={formOpen} />
+      ) : (
+        <LoginForm formOpen={formOpen} toggleForm={toggleForm} />
+      )}
+
       <NavbarInner
         sidebarDropped={sidebarDropped}
         toggleSidebar={toggleSidebar}

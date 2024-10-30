@@ -17,13 +17,11 @@ export default function BigSidebar({
     <aside
       id="big-sidebar"
       className={`h-[100vh] min-w-[256px] shadow-2xl bg-white duration-300 ease-in-out absolute top-0 z-40 ${
-        sidebarDropped
-          ? "translate-x-0 overflow-y-scroll"
-          : "translate-x-[-100%]"
+        sidebarDropped ? "translate-x-0 " : "translate-x-[-100%]"
       } ${formOpen ? " w-screen" : "w-[212px]"}`}
     >
       <button
-        className=" mt-4 mb-4  p-2 text-xl font-semibold bg-[#00000020]"
+        className=" mt-4 mb-4  p-2 text-xl font-semibold bg-[#00000020] hover:bg-[#00000010]"
         onClick={() => {
           toggleSidebar(!sidebarDropped);
           toggleForm(false);

@@ -99,8 +99,8 @@ export default function Carousel() {
         <Image
           src="/assets/svgs/chevronBlackLeft.svg"
           alt="chevron arrow left"
-          height={29}
-          width={16}
+          height={30}
+          width={17}
         />
       </button>
       <div id="view-port" className="w-screen overflow-hidden">
@@ -120,8 +120,8 @@ export default function Carousel() {
         <Image
           src="/assets/svgs/chevronBlackright.svg"
           alt="chevron arrow right"
-          height={29}
-          width={16}
+          height={30}
+          width={17}
         />
       </button>
     </div>

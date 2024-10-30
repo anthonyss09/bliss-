@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import Navbar from "./components/Navbar";
@@ -26,6 +25,7 @@ export default function RootLayout({
     <html lang="en">
       <StoreProvider>
         <body id="body" className={` antialiased ${inter.variable} `}>
+          {" "}
           <Navbar />
           <div id="children-body"> {children}</div>
           <Footer />

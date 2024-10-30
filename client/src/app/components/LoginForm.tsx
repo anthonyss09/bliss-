@@ -1,6 +1,12 @@
 import { useState } from "react";
 import FormRow from "./FormRow";
 import Image from "next/image";
+import {
+  useRegisterCustomerMutation,
+  useCreatCustomerTokenMutation,
+} from "../../lib/features/auth/authSlice";
+import handleLogin from "../utils/handlers/handleLogin";
+import { useAppDispatch } from "../../lib/hooks";
 
 export default function LoginForm({
   formOpen,
@@ -10,15 +16,49 @@ export default function LoginForm({
   toggleForm: (bool: boolean) => void;
 }) {
   const [isLogin, setIsLogin] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+
+  const disptach = useAppDispatch();
+
+  const [registerCustomer] = useRegisterCustomerMutation();
+  const [createCustomerToken] = useCreatCustomerTokenMutation();
 
   function toggleLogin() {
     setIsLogin(!isLogin);
   }
+
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const { id, value } = e.target;
+    if (id == "password") {
+      setPassword(value);
+    }
+    if (id === "email") {
+      setEmail(value);
+    }
+    if (id === "firstName") {
+      setFirstName(value);
+    }
+  }
+
+  async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
+    e.preventDefault();
+    handleLogin({
+      createCustomerToken,
+      registerCustomer,
+      email: email,
+      password: password,
+      firstName: firstName,
+      isLogin,
+    });
+  }
   return (
     <form
-      className={`pb-8 mb-4 mt-8 left-0 absolute duration-500 ease-in-out bg-white flex flex-col z-[60] top-[216px] sm:top-[96px] sm:shadow-xl sm:border-[1px] sm:border-[#00000005] sm:rounded-xl ${
+      onSubmit={handleSubmit}
+      className={`pb-8 mb-4 mt-8 left-0 absolute duration-500 ease-in-out bg-white flex flex-col z-[60] top-[216px] sm:top-[96px] sm:shadow-xl sm:border-[2px] sm:border-[#3111f310] sm:rounded-2xl ${
         formOpen
-          ? "h-[440px] overflow-y-scroll w-full sm:h-fit sm:w-[400px] translate-x-0 sm:ml-[50%] sm:translate-x-[-50%]  sm:fixed sm:overflow-auto"
+          ? "h-[440px] overflow-y-scroll w-full sm:h-fit sm:w-[500px] translate-x-0 sm:ml-[50%] sm:translate-x-[-50%]  sm:fixed sm:overflow-auto"
           : "z-[-10] translate-x-[-500px]"
       }`}
     >
@@ -62,13 +102,30 @@ export default function LoginForm({
         <h3 className="text-[22px] font-medium mb-2 ml-2 tracking-wide">
           {isLogin ? "Login" : "Register"}
         </h3>
-        {!isLogin && <FormRow name="Name" id="name" />}
-        <FormRow name="Email" id="email" />
-        <FormRow name="Password" id="password" />
+        {!isLogin && (
+          <FormRow
+            name="Name"
+            id="firstName"
+            onChange={handleInputChange}
+            value={firstName}
+          />
+        )}
+        <FormRow
+          name="Email"
+          id="email"
+          onChange={handleInputChange}
+          value={email}
+        />
+        <FormRow
+          name="Password"
+          id="password"
+          onChange={handleInputChange}
+          value={password}
+        />
       </div>
       <div className="">
         {" "}
-        <button className="h-12 w-[256px] bg-[#3111f3] text-white font-medium tracking-wide shadow-lg">
+        <button className="h-12 w-[320px] bg-[#3111f330] text-black font-medium tracking-wide shadow-lg sm:w-[352px] hover:bg-[#3111f370] hover:text-white">
           {isLogin ? "Login" : "Register"}
         </button>
       </div>

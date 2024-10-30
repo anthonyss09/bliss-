@@ -32,6 +32,10 @@ body {
   transition: 0.5s ease-in-out all;
 }
 
+button {
+  transition: 0.3s ease-in-out all;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

@@ -1,10 +1,21 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import localSliceReducer from "./features/local/localSlice";
-export const makeStore = () => {
+import authSliceReducer from "./features/auth/authSlice";
+import { apiSlice } from "./features/api/apiSlice";
+
+// Create the root reducer separately so we can extract the RootState type
+const rootReducer = combineReducers({
+  local: localSliceReducer,
+  auth: authSliceReducer,
+  [apiSlice.reducerPath]: apiSlice.reducer,
+});
+
+export const makeStore = (preloadedState: any) => {
   return configureStore({
-    reducer: {
-      local: localSliceReducer,
-    },
+    reducer: rootReducer,
+    preloadedState,
+    middleware: (buildGetDefaultMiddleware: any) =>
+      buildGetDefaultMiddleware().concat(apiSlice.middleware),
   });
 };
 
