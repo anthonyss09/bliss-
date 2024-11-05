@@ -2,11 +2,14 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import localSliceReducer from "./features/local/localSlice";
 import authSliceReducer from "./features/auth/authSlice";
 import { apiSlice } from "./features/api/apiSlice";
+import alertsSliceReducer from "./features/alerts/alertsSlice";
+import { rtkQueryErrorLogger } from "./middleware/errorLogger";
 
 // Create the root reducer separately so we can extract the RootState type
 const rootReducer = combineReducers({
   local: localSliceReducer,
   auth: authSliceReducer,
+  alerts: alertsSliceReducer,
   [apiSlice.reducerPath]: apiSlice.reducer,
 });
 
@@ -15,7 +18,9 @@ export const makeStore = (preloadedState: any) => {
     reducer: rootReducer,
     preloadedState,
     middleware: (buildGetDefaultMiddleware: any) =>
-      buildGetDefaultMiddleware().concat(apiSlice.middleware),
+      buildGetDefaultMiddleware()
+        .concat(apiSlice.middleware)
+        .concat(rtkQueryErrorLogger),
   });
 };
 

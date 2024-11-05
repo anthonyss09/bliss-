@@ -1,5 +1,4 @@
 import isEmail from "../helpers/isEmail";
-
 export interface args {
   createCustomerToken: any;
   registerCustomer: any;
@@ -17,10 +16,12 @@ export default async function handleLogin({
   isLogin,
   firstName,
 }: args) {
+  if (!email || !password) {
+    throw new Error("Please fill out all fields.");
+  }
   if (!isEmail(email)) {
     throw new Error("Please enter a valid email address.");
   }
-
   if (!isLogin) {
     try {
       const response = await registerCustomer({ firstName, email, password });
@@ -29,21 +30,11 @@ export default async function handleLogin({
         email: email,
         password: password,
       });
-    } catch (error) {
-      console.log("the error", error);
-    }
+    } catch (error) {}
   } else {
-    try {
-      const response = await createCustomerToken({
-        email: email,
-        password: password,
-      });
-      const customerAccessTokenData = response.data.customerAccessTokenCreate;
-      if (customerAccessTokenData.customerAccessToken === null) {
-        console.log("invalid credentials");
-      }
-    } catch (error) {
-      console.log("the error", error);
-    }
+    const response = await createCustomerToken({
+      email: email,
+      password: password,
+    });
   }
 }

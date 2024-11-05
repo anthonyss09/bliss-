@@ -15,7 +15,7 @@ export default function ({ formOpen }: { formOpen: boolean }) {
 
   return (
     <aside
-      className={`pb-24 mb-4 mt-8 left-0 absolute duration-500 ease-in-out bg-white flex flex-col z-[60] top-[216px] sm:pt-8 sm:pb-8 sm:top-[80px] sm:shadow-2xl sm:border-[2px] sm:border-[#3111f310] sm:rounded-2xl border-[#00000005] border-[1px] ${
+      className={`pb-24 mb-4 mt-8 left-0 absolute duration-500 ease-in-out bg-white flex flex-col z-[60] top-[216px] sm:pt-8 sm:pb-8 sm:top-[80px] sm:shadow-2xl sm:border-[2px] sm:border-[#3111f310] sm:rounded-2xl border-[#00000005] border-[4px] ${
         formOpen
           ? "h-[480px] overflow-y-scroll w-full sm:h-fit sm:w-[500px] translate-x-0 sm:ml-[50%] sm:translate-x-[-50%]  sm:fixed sm:overflow-auto"
           : "z-[-10] translate-x-[-500px]"

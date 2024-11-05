@@ -9,12 +9,17 @@ import {
 } from "../../lib/features/auth/authSlice";
 import { useAppSelector } from "../../lib/hooks";
 import AccountCenter from "./AccountCenter";
+import Alert from "./Alert";
+import { selectAlertData } from "../../lib/features/alerts/alertsSlice";
 
 export default function Navbar() {
   const [sidebarDropped, setSidebarDropped] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
 
   const { customerAccessToken, customer } = useAppSelector(selectAuthData);
+  const { showAlert, alertMessage, alertType } =
+    useAppSelector(selectAlertData);
+
   const {
     data: authenticationData,
     isLoading: authenticationLoading,
@@ -124,6 +129,11 @@ export default function Navbar() {
       id="navbar"
       className={`w-screen fixed top-0 z-30  bg-white duration-700 ease-in-out`}
     >
+      <Alert
+        alertMessage={alertMessage}
+        showAlert={showAlert}
+        alertType={alertType}
+      />
       {customer.id ? (
         <AccountCenter formOpen={formOpen} />
       ) : (

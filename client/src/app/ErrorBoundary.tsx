@@ -26,14 +26,15 @@ class ErrorBoundary extends React.Component<Props, State> {
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     // You can use your own error logging service here
     console.log({ error, errorInfo });
-    console.log("eat it");
+    console.log("console error test");
   }
   render() {
     // Check if the error is thrown
     if (this.state.hasError) {
+      console.log("caught in the boundary");
       // You can render any custom fallback UI
       return (
-        <div className="h-[200px] z-[200] top-0 left-0 bg-black">
+        <div className="z-[200] absolute top-0 left-0 bg-black ">
           <h2>Oops, there is an error!</h2>
           <button
             type="button"
