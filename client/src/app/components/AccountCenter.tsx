@@ -15,7 +15,7 @@ export default function ({ formOpen }: { formOpen: boolean }) {
 
   return (
     <aside
-      className={`pb-24 mb-4 mt-8 left-0 absolute duration-500 ease-in-out bg-white flex flex-col z-[60] top-[216px] sm:pt-8 sm:pb-8 sm:top-[80px] sm:shadow-2xl sm:border-[2px] sm:border-[#3111f310] sm:rounded-2xl border-[#00000005] border-[4px] ${
+      className={`pb-24 mb-4 mt-8 left-0 absolute duration-500 ease-in-out bg-white flex flex-col z-[60] top-[216px] sm:pt-8 sm:pb-8 sm:top-[80px] sm:shadow-2xl sm:border-[2px] sm:border-[#3111f310] sm:rounded-2xl ${
         formOpen
           ? "h-[480px] overflow-y-scroll w-full sm:h-fit sm:w-[500px] translate-x-0 sm:ml-[50%] sm:translate-x-[-50%]  sm:fixed sm:overflow-auto"
           : "z-[-10] translate-x-[-500px]"
@@ -25,15 +25,16 @@ export default function ({ formOpen }: { formOpen: boolean }) {
         <h3 className="h-16 mx-4 px-4 bg-[#3111f310]  font-medium text-lg flex items-center sm:bg-[#3111f370] ">
           Account Center
         </h3>
-        <p className="h-12 mx-4 pl-4 font-medium flex items-center tracking-wide">
+        <p className="h-12 mx-4 pl-4 font-semibold flex items-center tracking-wide">
           Welcome back {name}!
         </p>
-        <p className="h-4 mx-4 pl-4 mb-8 font-regular flex items-center tracking-wide text-black/70 text-sm">
-          Here are some suggested account actions.
+        <p className="h-4 mx-4 pl-4 mb-4 font-light flex items-center tracking-wide text-black/50 text-sm">
+          Account actions
         </p>
       </div>
       <ul className="flex flex-col gap-4">
         <ACLink text="Edit account details" path="#" />
+        <ACLink text="Go shopping" path="#" />
         <ACLink text="Go to your cart" path="#" />
         <ACLink text="View previously purchased items" path="#" />
         <ACLink text="Contact customer support" path="#" />

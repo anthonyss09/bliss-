@@ -56,7 +56,7 @@ export default function Home() {
         <section id="section-about" className={`px-4 md:px-0 md:mb-0 md:flex`}>
           <div
             id="serum-green-image"
-            className={`h-[195px] w-full mb-8 relative sm:h-[297px] md:h-[187] md:w-1/2 md:mb-0 lg:h-[228]`}
+            className={`h-[195px] w-full mb-8 relative shadow-sm sm:h-[297px] md:h-[187] md:w-1/2 md:mb-0 lg:h-[228]`}
           >
             <Image
               src="/assets/images/serumGreenBG.jpeg"
