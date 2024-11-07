@@ -38,7 +38,7 @@ export default function BigSidebar({
         id="sidebar-header"
         className="h-20 flex justify-between items-center bg-[#bed3fb] bg-white border-t-2 border-t-[#00000005]"
       >
-        <Logo />
+        <Logo toggleSidebar={toggleSidebar} />
         <div className="px-4 bg-white">
           {" "}
           <Image
@@ -87,10 +87,18 @@ export default function BigSidebar({
           formOpen ? "w-0 overflow-hidden" : ""
         }`}
       >
-        <BsMainItem name="Home" path="/" />
-        <BsMainItem name="Shop" path="/products/all-products" />
-        <BsMainItem name="About" path="/about" />
-        <BsMainItem name="Contact" path="/contact" />
+        <BsMainItem name="Home" path="/" toggleSidebar={toggleSidebar} />
+        <BsMainItem
+          name="Shop"
+          path="/products/all-products"
+          toggleSidebar={toggleSidebar}
+        />
+        <BsMainItem name="About" path="/about" toggleSidebar={toggleSidebar} />
+        <BsMainItem
+          name="Contact"
+          path="/contact"
+          toggleSidebar={toggleSidebar}
+        />
       </ul>
     </aside>
   );

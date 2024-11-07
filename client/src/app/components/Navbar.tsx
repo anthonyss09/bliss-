@@ -85,6 +85,7 @@ export default function Navbar() {
       body.style.overflow = "hidden";
     } else if (!bool && body) {
       body.style.overflow = "visible";
+      toggleForm(false);
     }
 
     const childrenBody = document.getElementById("children-body");
@@ -135,7 +136,7 @@ export default function Navbar() {
         alertType={alertType}
       />
       {customer.id ? (
-        <AccountCenter formOpen={formOpen} />
+        <AccountCenter formOpen={formOpen} toggleSidebar={toggleSidebar} />
       ) : (
         <LoginForm formOpen={formOpen} toggleForm={toggleForm} />
       )}

@@ -3,7 +3,13 @@ import { logoutCustomer } from "../../lib/features/auth/authSlice";
 import ACLink from "./ACLink";
 import { selectAuthData } from "../../lib/features/auth/authSlice";
 
-export default function ({ formOpen }: { formOpen: boolean }) {
+export default function ({
+  formOpen,
+  toggleSidebar,
+}: {
+  formOpen: boolean;
+  toggleSidebar: (bool: boolean) => void;
+}) {
   const dispatch = useAppDispatch();
   const { customer } = useAppSelector(selectAuthData);
   const name = customer.firstName || "friend";
@@ -33,11 +39,27 @@ export default function ({ formOpen }: { formOpen: boolean }) {
         </p>
       </div>
       <ul className="flex flex-col gap-4 my-4">
-        <ACLink text="Edit account details" path="#" />
-        <ACLink text="Go shopping" path="/products/all-products" />
-        <ACLink text="Go to your cart" path="#" />
-        <ACLink text="View previously purchased items" path="#" />
-        <ACLink text="Contact customer support" path="#" />
+        <ACLink
+          text="Edit account details"
+          path="#"
+          toggleSidebar={toggleSidebar}
+        />
+        <ACLink
+          text="Go shopping"
+          path="/products/all-products"
+          toggleSidebar={toggleSidebar}
+        />
+        <ACLink text="Go to your cart" path="#" toggleSidebar={toggleSidebar} />
+        <ACLink
+          text="View previously purchased items"
+          path="#"
+          toggleSidebar={toggleSidebar}
+        />
+        <ACLink
+          text="Contact customer support"
+          path="#"
+          toggleSidebar={toggleSidebar}
+        />
         <li className="mx-8">
           <button
             onClick={handleLogout}

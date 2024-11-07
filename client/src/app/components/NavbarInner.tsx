@@ -35,7 +35,7 @@ export default function NavbarInner({
           className=" sm:hidden"
         />
       </button>
-      <Logo />
+      <Logo toggleSidebar={toggleSidebar} />
       <button>
         {" "}
         <Image

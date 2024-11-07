@@ -5,18 +5,23 @@ import { usePathname } from "next/navigation";
 export default function BsMainItem({
   name,
   path,
+  toggleSidebar,
 }: {
   name: String;
   path: String;
+  toggleSidebar: (bool: boolean) => void;
 }) {
   const pathname = usePathname();
   return (
     <li
-      className={`h-16 w-[192px] w-full pl-0 flex items-center ${
+      className={`h-16 w-[192px] w-full pl-0 flex items-center hover:bg-[#3111f310] hover:pr-8 duration-300 ${
         pathname === `${path}`
           ? "bg-[#3111f310]  justify-start pl-4"
           : "justify-center"
       }`}
+      onClick={() => {
+        toggleSidebar(false);
+      }}
     >
       <Link href={`${path}`} className={`flex items-center gap-4 `}>
         <p
