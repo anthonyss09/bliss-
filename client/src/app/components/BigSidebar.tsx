@@ -59,8 +59,8 @@ export default function BigSidebar({
           onClick={() => {
             toggleForm(!formOpen);
           }}
-          className={`h-12 w-[128px] font-semibold text-left pl-4 text-white bg-[#3111f380] ${
-            formOpen ? "bg-[#3111f380] " : ""
+          className={`h-12 w-[128px] font-semibold text-left pl-4 text-white bg-[#3111f3] ${
+            formOpen ? "bg-[#3111f3] " : ""
           }`}
         >
           Menu
@@ -87,8 +87,8 @@ export default function BigSidebar({
           formOpen ? "w-0 overflow-hidden" : ""
         }`}
       >
-        <BsMainItem name="Home" path="" />
-        <BsMainItem name="Shop" path="/shop" />
+        <BsMainItem name="Home" path="/" />
+        <BsMainItem name="Shop" path="/products/all-products" />
         <BsMainItem name="About" path="/about" />
         <BsMainItem name="Contact" path="/contact" />
       </ul>

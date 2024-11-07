@@ -9,6 +9,7 @@ export const rtkQueryErrorLogger: Middleware =
     // RTK Query uses `createAsyncThunk` from redux-toolkit under the hood, so we're able to utilize these matchers!
     if (isRejected(action)) {
       console.log("We got a rejected action!");
+      console.log(action);
     }
 
     return next(action);

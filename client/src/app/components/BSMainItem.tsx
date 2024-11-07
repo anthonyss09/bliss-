@@ -13,20 +13,20 @@ export default function BsMainItem({
   return (
     <li
       className={`h-16 w-[192px] w-full pl-0 flex items-center ${
-        pathname === `/${path}`
+        pathname === `${path}`
           ? "bg-[#3111f310]  justify-start pl-4"
           : "justify-center"
       }`}
     >
-      <Link href="#" className={`flex items-center gap-4 `}>
+      <Link href={`${path}`} className={`flex items-center gap-4 `}>
         <p
           className={`font-semibold text-black tracking-wide text-base ${
-            pathname === `/${path}` ? "" : ""
+            pathname === `${path}` ? "" : ""
           }`}
         >
           {name}
         </p>
-        {pathname != `/${path}` && (
+        {pathname != `${path}` && (
           <Image
             src="/assets/svgs/chevronBlackRight.svg"
             alt="arrow right"

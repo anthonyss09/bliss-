@@ -5,8 +5,8 @@ export default function Footer() {
   return (
     <footer className="mx-4 pb-16">
       <ul className="mb-4 md:mx-24 border-black/4 border-t-0">
-        <FooterLink name="Home" path="" />
-        <FooterLink name="Shop" path="shop" />
+        <FooterLink name="Home" path="/" />
+        <FooterLink name="Shop" path="/products/all-products" />
         <FooterLink name="About" path="about" />
         <FooterLink name="Contact" path="contact" />
       </ul>

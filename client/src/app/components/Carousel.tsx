@@ -16,7 +16,13 @@ export default function Carousel() {
       {slidesArray.map((slide, index) => {
         return (
           <div key={index}>
-            <ProductPreview size="fit" />
+            <ProductPreview
+              size="fit"
+              title="Best Seller"
+              productType="Body Lotion"
+              price="40.00"
+              profile="Basil + Kiwi + Coriander"
+            />
           </div>
         );
       })}

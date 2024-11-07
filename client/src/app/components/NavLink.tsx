@@ -9,9 +9,10 @@ export default function NavLink({
   path: string;
 }) {
   const pathname = usePathname();
+
   return (
     <Link
-      href="#"
+      href={`/${path}`}
       className={`h-8 w-24 font-medium tracking-wide grid place-items-center ${
         pathname === `/${path}`
           ? "bg-[#3111f310] rounded-2xl font-semibold shadow-sm"

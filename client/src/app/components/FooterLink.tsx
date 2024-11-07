@@ -13,10 +13,10 @@ export default function FooterLink({
   return (
     <li
       className={`py-4 pl-4 border-black/4 border-b-0 md:border-0 ${
-        pathname === `/${path}` ? "bg-[#3111f310] " : ""
+        pathname === `${path}` ? "bg-[#3111f310] " : ""
       }`}
     >
-      <Link href="#" className="font-medium text-lg">
+      <Link href={`${path}`} className="font-medium text-lg">
         {name}
       </Link>
     </li>

@@ -2,11 +2,10 @@ import React from "react";
 import { afterEach, beforeEach, expect, test } from "vitest";
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
-import { screen, waitFor, fireEvent } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 // We're using our own custom render function and not RTL's render.
 import { renderWithProviders } from "../src/app/utils/test-utils";
-import LoginForm from "../src/app/components/LoginForm";
-import AccountCenter from "../src/app/components/AccountCenter";
+import AllProducts from "../src/app/products/all-products/page";
 
 export const handlers = [
   http.post(
@@ -19,6 +18,27 @@ export const handlers = [
           customer: { firstName: "foobar", id: "111" },
           customerAccessTokenCreate: { customerAccessToken: "someToken" },
           customerCreate: { customer: { firstName: "foobar", id: "" } },
+          products: {
+            edges: [
+              {
+                cursor: null,
+                node: {
+                  description: "test description",
+                  id: "testId",
+                  priceRange: { maxVariantPrice: { amount: "testPrice" } },
+                  productType: "testProductType",
+                  tags: ["tag", "tag", "tag"],
+                  title: "testTitle",
+                },
+              },
+            ],
+            pageInfo: {
+              endCursor: null,
+              hasNextPage: false,
+              hasPreviousPage: false,
+              startCursor: null,
+            },
+          },
         },
       });
     }
@@ -37,25 +57,14 @@ afterEach(() => server.resetHandlers());
 afterEach(() => server.close());
 
 test("graphql client returns data and component renders data", async () => {
-  const { container } = renderWithProviders(
+  renderWithProviders(
     <>
-      <LoginForm formOpen={true} toggleForm={() => {}} />
-      <AccountCenter formOpen={true} />
+      <AllProducts />
     </>
   );
 
-  const email: HTMLInputElement = screen.getByLabelText("Email");
-  const password: HTMLInputElement = screen.getByLabelText("Password");
-  fireEvent.change(email, { target: { value: "test1@gmail.com" } });
-  fireEvent.change(password, { target: { value: "123456" } });
-  fireEvent.click(screen.getAllByText("Register")[0]);
-  fireEvent.click(screen.getAllByText("Register")[1]);
-
-  expect(password.value).toBe("123456");
-  expect(email.value).toBe("test1@gmail.com");
-
   await waitFor(() => {
-    const p = screen.getByText("Welcome back foobar!");
-    expect(p).toBeDefined();
+    const testProductTitle = screen.getByText("testTitle");
+    expect(testProductTitle).toBeDefined();
   });
 });

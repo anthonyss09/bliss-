@@ -43,11 +43,9 @@ export default function Home() {
             sizes="(min-width:640px) 608px,(min-width:768px) 704px,(min-width:1024px) 704px, 398px"
           />
         </div>
-        <Link href="#">
-          <div className="h-12  grid place-items-center border-2 border-[#190B72] w-[192px] absolute left-1/2 top-[180px] sm:top-1/2 translate-x-[-50%] translate-y-[-50%] bg-white/70 shadow-lg">
-            <p className="text-[15px] font-semibold text-[#190B72] tracking-wide">
-              Shop Collection
-            </p>
+        <Link href="/products/all-products">
+          <div className="h-12 text-[15px] font-semibold text-[#190B72] tracking-wide grid place-items-center border-2 border-[#190B72] w-[192px] absolute left-1/2 top-[180px] sm:top-1/2 translate-x-[-50%] translate-y-[-50%] bg-white/70 shadow-lg hover:bg-black hover:text-white">
+            Shop Collection
           </div>
         </Link>
       </header>
@@ -122,7 +120,7 @@ export default function Home() {
 
         <section id="section-best-selling" className="mb-4">
           <h3
-            className={`w-[110px] h-[48px] text-lg font-medium ml-4 sm:w-[140px] pt-[8px] sm:text-xl md:w-[192px] md:text-center md:ml-[25%] md:translate-x-[-50%] lg:text-[22px] duration-500 ease-in-out ${
+            className={`w-[110px] h-[48px] text-lg font-medium ml-4 mb-8 sm:w-[140px] pt-[8px] sm:text-xl md:w-[192px] md:text-center md:ml-[25%] md:translate-x-[-50%] lg:text-[22px] duration-500 ease-in-out ${
               brightBlueBG
                 ? "bg-[#2b9df0] w-[192px] text-center text-white"
                 : "bg-white"
@@ -136,11 +134,9 @@ export default function Home() {
               divGrey ? "bg-black/10" : "bg-white"
             } py-4 sm:py-8 lg:mx-24  duration-500 ease-in-out`}
           >
-            <Link href="#">
-              <div className="h-12 w-32 border-2 bg-white border-blue-dark mx-auto grid place-items-center ">
-                <p className="text-[12px] font-medium tracking-wide">
-                  Shop Collection
-                </p>
+            <Link href="/products/all-products">
+              <div className="h-12 w-32 border-2 bg-white border-blue-dark mx-auto grid place-items-center tracking-wide text-sm font-medium hover:bg-black hover:border-0 hover:text-white">
+                Shop Collection
               </div>
             </Link>
           </div>

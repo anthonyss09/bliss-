@@ -66,9 +66,7 @@ export const extendedApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg: any, lifecycleApi: any) {
         try {
           const response = await lifecycleApi.queryFulfilled;
-          if (
-            response.data.customerAccessTokenCreate.customerUserErrors.length
-          ) {
+          if (response.data.customerAccessTokenCreate.customerUserErrors) {
             throw new Error(
               response.data.customerAccessTokenCreate.customerUserErrors[0].message
             );
@@ -155,13 +153,15 @@ export const extendedApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg: any, lifecycleApi: any) {
         try {
           const response = await lifecycleApi.queryFulfilled;
-          if (response.data.customerCreate.customerUserErrors.length) {
+          if (response.data.customerCreate.customerUserErrors) {
             throw new Error(
               response.data.customerCreate.customerUserErrors[0].message
             );
           }
           if (response.customer !== null) {
-            lifecycleApi.dispatch(setCustomerData(response.customer));
+            lifecycleApi.dispatch(
+              setCustomerData(response.data.customerCreate.customer)
+            );
           } else if (response.customer === null) {
           }
         } catch (error: any) {

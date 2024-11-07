@@ -6,7 +6,7 @@ import { selectAuthData } from "../../lib/features/auth/authSlice";
 export default function ({ formOpen }: { formOpen: boolean }) {
   const dispatch = useAppDispatch();
   const { customer } = useAppSelector(selectAuthData);
-  const name = customer.firstName;
+  const name = customer.firstName || "friend";
 
   function handleLogout() {
     dispatch(logoutCustomer(null));
@@ -22,26 +22,26 @@ export default function ({ formOpen }: { formOpen: boolean }) {
       }`}
     >
       <div>
-        <h3 className="h-16 mx-4 px-4 bg-[#3111f310]  font-medium text-lg flex items-center sm:bg-[#3111f370] ">
+        <h3 className="h-16 px-4 bg-[#3111f310]  font-medium text-lg flex items-center sm:bg-[#3111f370] ">
           Account Center
         </h3>
         <p className="h-12 mx-4 pl-4 font-semibold flex items-center tracking-wide">
           Welcome back {name}!
         </p>
-        <p className="h-4 mx-4 pl-4 mb-4 font-light flex items-center tracking-wide text-black/50 text-sm">
+        <p className="h-12 mx-4 pl-4 font-light flex items-center tracking-wide text-black text-sm bg-[#00000010]">
           Account actions
         </p>
       </div>
-      <ul className="flex flex-col gap-4">
+      <ul className="flex flex-col gap-4 my-4">
         <ACLink text="Edit account details" path="#" />
-        <ACLink text="Go shopping" path="#" />
+        <ACLink text="Go shopping" path="/products/all-products" />
         <ACLink text="Go to your cart" path="#" />
         <ACLink text="View previously purchased items" path="#" />
         <ACLink text="Contact customer support" path="#" />
         <li className="mx-8">
           <button
             onClick={handleLogout}
-            className="h-12 w-[256px] w-full text-sm mt-4 font-semibold bg-[#3111f330] text-black tracking-wide text-black hover:bg-[#3111f370] hover:text-white"
+            className="h-12 w-[256px] w-full text-sm font-semibold bg-[#3111f330] text-black tracking-wide text-black hover:bg-[#3111f370] hover:text-white"
           >
             Logout
           </button>
