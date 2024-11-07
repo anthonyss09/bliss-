@@ -33,7 +33,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className={`w-screen pt-24 `}>
+    <div className={`w-screen mt-24 `}>
       <header className="px-4 mb-0  relative md:mb-0 md:px-8 lg:px-12">
         <div className="h-[345px] w-full relative sm:h-[527px] md:h-[610px] lg:h-[610px] lg:w-[80vw] lg:mx-auto">
           <Image

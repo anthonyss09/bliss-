@@ -6,6 +6,7 @@ import { useState, useRef } from "react";
 import { getProductsArgs } from "../../../lib/features/products/types";
 import Spinner from "../../components/Spinner";
 import TryAgain from "../../components/TryAgain";
+import Link from "next/link";
 
 export default function AllProducts() {
   const [productArgs, setProductArgs] = useState<getProductsArgs>({
@@ -65,7 +66,7 @@ export default function AllProducts() {
     );
   } else if (isSuccess) {
     content = products.map((product: any) => {
-      const { title, tags, productType } = product.node;
+      const { title, tags, productType, id } = product.node;
       const profile = `${tags[0]} + ${tags[1]} + ${tags[2]}`;
       const price = product.node.priceRange.maxVariantPrice.amount;
       return (
@@ -76,6 +77,7 @@ export default function AllProducts() {
           profile={profile}
           price={price}
           productType={productType}
+          id={id}
         />
       );
     });
@@ -84,10 +86,16 @@ export default function AllProducts() {
   }
 
   return (
-    <div className="pt-24">
+    <div className="mt-24 sm:mt-32">
       <header>
-        <p className="ml-4 mb-8 mt-4 text-sm font-medium sm:text-sm tracking-wide sm:ml-8 sm:mt-8 sm:font-light">
-          All Products
+        <p className="ml-4 mb-8 text-sm font-medium sm:text-sm tracking-wide sm:ml-8 sm:font-light">
+          <Link
+            href="/"
+            className="duration-300 hover:text-[#00000080] hover:font-semibold"
+          >
+            Home
+          </Link>{" "}
+          / All Products
         </p>
       </header>
       <main className="border-b-4 pt-8 mb-4 border-[#00000005] border-t-2">

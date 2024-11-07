@@ -22,6 +22,7 @@ export default function Carousel() {
               productType="Body Lotion"
               price="40.00"
               profile="Basil + Kiwi + Coriander"
+              id="1"
             />
           </div>
         );

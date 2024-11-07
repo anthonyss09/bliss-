@@ -4,6 +4,7 @@ beforeAll(() => {
     return {
       usePathname: vi.fn(),
       useRouter: vi.fn(),
+      useSearchParams: vi.fn(),
     };
   });
 });

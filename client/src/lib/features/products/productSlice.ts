@@ -12,6 +12,26 @@ const productsSlice = createSlice({
 
 export const extendedApi = apiSlice.injectEndpoints({
   endpoints: (build) => ({
+    getProduct: build.query({
+      query: (id: string | null) => ({
+        document: gql`
+          query {
+            product(id: "${id}") {
+              title
+              productType
+              tags
+              description
+              id
+              priceRange {
+                maxVariantPrice {
+                  amount
+                }
+              }
+            }
+          }
+        `,
+      }),
+    }),
     getProducts: build.query({
       query: (arg: getProductsArgs) => ({
         document: gql`
@@ -48,6 +68,6 @@ export const extendedApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetProductsQuery } = extendedApi;
+export const { useGetProductsQuery, useGetProductQuery } = extendedApi;
 
 export default productsSlice.reducer;
