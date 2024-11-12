@@ -14,8 +14,10 @@
     "@reduxjs/toolkit": "^2.3.0",
     "@rtk-query/graphql-request-base-query": "^2.3.1",
     "dotenv": "^16.4.5",
+    "googleapis": "^144.0.0",
     "graphql-request": "^7.1.0",
     "next": "^15.0.2",
+    "nodemailer": "^6.9.16",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
@@ -23,6 +25,7 @@
     "@testing-library/jest-dom": "^6.6.2",
     "@testing-library/react": "^16.0.1",
     "@types/node": "^20",
+    "@types/nodemailer": "^6.4.16",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@vitest/ui": "^2.1.4",

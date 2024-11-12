@@ -5,10 +5,17 @@ import { setupServer } from "msw/node";
 import { screen, waitFor, fireEvent } from "@testing-library/react";
 // We're using our own custom render function and not RTL's render.
 import { renderWithProviders } from "../src/app/utils/test-utils";
-import LoginForm from "../src/app/components/LoginForm";
-import AccountCenter from "../src/app/components/AccountCenter";
+import ContactPage from "../src/app/contact/page";
+import Navbar from "../src/app/components/Navbar";
 
 export const handlers = [
+  http.post(`/api/v1/contact`, () => {
+    console.log("query intercepted");
+
+    return HttpResponse.json({
+      contactResponse: { message: "test successful" },
+    });
+  }),
   http.post(
     `https://${process.env.NEXT_PUBLIC_SHOP_NAME}.myshopify.com/api/${process.env.NEXT_PUBLIC_VERSION}/graphql.json`,
     () => {
@@ -37,25 +44,23 @@ afterEach(() => server.resetHandlers());
 afterEach(() => server.close());
 
 test("graphql client returns data and component renders data", async () => {
-  const { container } = renderWithProviders(
+  renderWithProviders(
     <>
-      <LoginForm formOpen={true} toggleForm={() => {}} />
-      <AccountCenter formOpen={true} toggleSidebar={() => {}} />
+      <ContactPage />
+      <Navbar />
     </>
   );
 
-  const email: HTMLInputElement = screen.getByLabelText("Email");
-  const password: HTMLInputElement = screen.getByLabelText("Password");
+  const emails = screen.getAllByLabelText("Email");
+  const email = emails[0];
+  const password: HTMLTextAreaElement = screen.getByLabelText("Message");
   fireEvent.change(email, { target: { value: "test1@gmail.com" } });
   fireEvent.change(password, { target: { value: "123456" } });
-  fireEvent.click(screen.getAllByText("Register")[0]);
-  fireEvent.click(screen.getAllByText("Register")[1]);
 
-  expect(password.value).toBe("123456");
-  expect(email.value).toBe("test1@gmail.com");
+  fireEvent.click(screen.getAllByText("Send")[0]);
 
   await waitFor(() => {
-    const p = screen.getByText("Welcome back foobar!");
+    const p = screen.getByText("Message sent!");
     expect(p).toBeDefined();
   });
 });

@@ -40,7 +40,7 @@ export default function SingleProduct() {
             ${data.product.priceRange.maxVariantPrice.amount}
           </p>
           <p className="mb-4 text-sm">{data.product.description}</p>
-          <button className="h-12 w-full font-semibold bg-[#0f7e7e70] hover:shadow-2xl hover:bg-white hover:text-white hover:bg-[#0f7e7e]">
+          <button className="h-12 w-full font-semibold bg-[#0f7e7e70] hover:shadow-2xl hover:text-white hover:bg-[#0f7e7e]">
             Add to cart
           </button>
         </div>

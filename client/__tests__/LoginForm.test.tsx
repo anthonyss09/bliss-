@@ -40,7 +40,7 @@ test("graphql client returns data and component renders data", async () => {
   renderWithProviders(
     <>
       <LoginForm formOpen={true} toggleForm={() => {}} />
-      <AccountCenter formOpen={true} />
+      <AccountCenter formOpen={true} toggleSidebar={() => {}} />
     </>
   );
 

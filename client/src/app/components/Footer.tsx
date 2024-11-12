@@ -7,8 +7,8 @@ export default function Footer() {
       <ul className="mb-4 md:mx-24 border-black/4 border-t-0">
         <FooterLink name="Home" path="/" />
         <FooterLink name="Shop" path="/products/all-products" />
-        <FooterLink name="About" path="about" />
-        <FooterLink name="Contact" path="contact" />
+        <FooterLink name="About" path="/about" />
+        <FooterLink name="Contact" path="/contact" />
       </ul>
       <div className="flex gap-4 mb-4 pl-4  md:justify-center">
         <Image

@@ -12,7 +12,7 @@ export default function NavLink({
 
   return (
     <Link
-      href={`/${path}`}
+      href={`${path}`}
       className={`h-8 w-24 font-medium tracking-wide grid place-items-center ${
         pathname === `/${path}`
           ? "bg-[#3111f310] rounded-2xl font-semibold shadow-sm"

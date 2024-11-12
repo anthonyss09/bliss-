@@ -47,9 +47,9 @@ export default function NavbarInner({
         />
       </button>
       <div className="hidden sm:flex mx-auto justify-center gap-8">
-        <NavLink name="Home" path="" />
+        <NavLink name="Home" path="/" />
 
-        <NavLink name="Shop" path="products/all-products" />
+        <NavLink name="Shop" path="/products/all-products" />
         <Image
           src="/assets/svgs/cart.svg"
           alt="cart icon"

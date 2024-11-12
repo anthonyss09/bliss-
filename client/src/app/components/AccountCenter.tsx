@@ -57,7 +57,7 @@ export default function ({
         />
         <ACLink
           text="Contact customer support"
-          path="#"
+          path="/contact"
           toggleSidebar={toggleSidebar}
         />
         <li className="mx-8">
