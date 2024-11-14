@@ -1,6 +1,7 @@
 import NavLink from "./NavLink";
 import Image from "next/image";
 import Logo from "./Logo";
+import Link from "next/link";
 
 export default function NavbarInner({
   sidebarDropped,
@@ -36,7 +37,7 @@ export default function NavbarInner({
         />
       </button>
       <Logo toggleSidebar={toggleSidebar} />
-      <button>
+      <Link href="/cart">
         {" "}
         <Image
           src="/assets/svgs/cart.svg"
@@ -45,17 +46,21 @@ export default function NavbarInner({
           width={32}
           className="sm:hidden"
         />
-      </button>
-      <div className="hidden sm:flex mx-auto justify-center gap-8">
+      </Link>
+      <div className="hidden sm:flex mx-auto justify-center gap-8 align-center">
         <NavLink name="Home" path="/" />
 
         <NavLink name="Shop" path="/products/all-products" />
-        <Image
-          src="/assets/svgs/cart.svg"
-          alt="cart icon"
-          height={24}
-          width={24}
-        />
+        <Link href="/cart">
+          {" "}
+          <Image
+            src="/assets/svgs/cart.svg"
+            alt="cart icon"
+            height={24}
+            width={24}
+          />
+        </Link>
+
         <button
           onClick={() => {
             toggleForm(!formOpen);

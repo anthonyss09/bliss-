@@ -11,6 +11,7 @@ import { useAppSelector } from "../../lib/hooks";
 import AccountCenter from "./AccountCenter";
 import Alert from "./Alert";
 import { selectAlertData } from "../../lib/features/alerts/alertsSlice";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const [sidebarDropped, setSidebarDropped] = useState(false);
@@ -19,6 +20,9 @@ export default function Navbar() {
   const { customerAccessToken, customer } = useAppSelector(selectAuthData);
   const { showAlert, alertMessage, alertType } =
     useAppSelector(selectAlertData);
+
+  const pathname = usePathname();
+  console.log(pathname);
 
   const {
     data: authenticationData,
@@ -32,14 +36,13 @@ export default function Navbar() {
 
   const yPosition = useRef(0);
   const windowWidth = useRef(0);
+  const showCartRow = useRef(false);
 
   function closeNav() {
     const el = document.getElementById("navbar");
     const navInner = document.getElementById("navbar-inner");
     if (el && navInner) {
-      el.style.height = "0";
-      navInner.style.height = "0";
-      navInner.style.overflowY = "hidden";
+      el.style.transform = "translateY(-96px)";
     }
   }
 
@@ -48,9 +51,7 @@ export default function Navbar() {
     const navInner = document.getElementById("navbar-inner");
 
     if (el && navInner) {
-      el.style.height = "96px";
-      navInner.style.height = "100%";
-      navInner.style.overflowY = "visible";
+      el.style.transform = "translateY(0)";
     }
   }
 
@@ -59,6 +60,7 @@ export default function Navbar() {
       return;
     }
     const el = document.getElementById("navbar");
+    const checkoutRow = document.getElementById("checkout-row");
     if (typeof window !== "undefined") {
       if (window.scrollY > yPosition.current && window.scrollY > 250) {
         closeNav();
@@ -67,9 +69,24 @@ export default function Navbar() {
       }
       if (el) {
         if (window.scrollY > 250) {
-          el.style.boxShadow = "4px 4px 10px rgb(180,180,180)";
+          el.style.boxShadow = "2px 2px 4px #00000010";
         } else {
           el.style.boxShadow = "none";
+        }
+      }
+      if (checkoutRow) {
+        if (
+          pathname === "/cart" &&
+          window.scrollY > 300 &&
+          window.innerWidth < 660
+        ) {
+          checkoutRow.style.height = "120px";
+          checkoutRow.style.padding = "16px";
+          checkoutRow.style.borderBottom = "1px solid #00000005";
+        } else {
+          checkoutRow.style.height = "0";
+          checkoutRow.style.padding = "0";
+          checkoutRow.style.borderBottom = "none";
         }
       }
 
@@ -115,6 +132,8 @@ export default function Navbar() {
     toggleSidebar(false);
   }
 
+  useEffect(() => {}, [pathname]);
+
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     window.addEventListener("resize", handleResize);
@@ -154,6 +173,18 @@ export default function Navbar() {
         toggleForm={toggleForm}
         formOpen={formOpen}
       />
+      {pathname === "/cart" && (
+        <div id="checkout-row" className="h-0 overflow-hidden bg-white sm:px-8">
+          {" "}
+          <div className="w-full flex justify-between mb-4">
+            <p className="font-semibold sm:text-lg">Total:</p>
+            <p className="font-semibold sm:text-lg">value</p>
+          </div>
+          <button className="h-12 w-full bg-[#bed3fb] hover:bg-[#2b9df0] hover:text-white font-semibold tracking-wide">
+            Checkout
+          </button>
+        </div>
+      )}
     </nav>
   );
 }

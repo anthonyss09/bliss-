@@ -99,7 +99,7 @@ export default function AllProducts() {
         </p>
       </header>
       <main className="border-b-4 pt-8 mb-4 border-[#00000005] border-t-2">
-        <div className="min-h-[300px] w-full flex flex-wrap justify-center gap-16 mb-4 sm:gap-12 md:gap-16 lg:gap-20">
+        <div className="min-h-[300px] w-full flex flex-wrap justify-around gap-16 mb-4 sm:gap-12 md:gap-16 lg:gap-20">
           {content}
         </div>
         <div className="w-full border-[#00000005] border-t-2 py-4">

@@ -1,5 +1,4 @@
 export default async function getShopifyCustomer(customerAccessToken) {
-  // console.log("were using", customerAccessToken);
   try {
     const { data } = await fetch(
       `https://${process.env.NEXT_PUBLIC_SHOP_NAME}.myshopify.com/api/${process.env.NEXT_PUBLIC_VERSION}/graphql.json`,
@@ -24,9 +23,8 @@ export default async function getShopifyCustomer(customerAccessToken) {
         }),
       }
     ).then((response) => response.json());
-    // console.log("big data ttime", data);
     return data;
   } catch (error) {
-    // console.log("major error in login department");
+    console.log(error);
   }
 }

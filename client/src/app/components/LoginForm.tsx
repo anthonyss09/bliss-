@@ -57,6 +57,7 @@ export default function LoginForm({
       password: password,
       firstName: firstName,
       isLogin,
+      dispatch,
     }).catch((error) => {
       dispatch(showAlert({ alertMessage: error.message, alertType: "danger" }));
       setTimeout(() => {

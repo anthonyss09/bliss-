@@ -4,6 +4,7 @@ import authSliceReducer from "./features/auth/authSlice";
 import { apiSlice } from "./features/api/apiSlice";
 import alertsSliceReducer from "./features/alerts/alertsSlice";
 import productsSliceReducer from "./features/products/productSlice";
+import cartSliceReducer from "./features/cart/cartSlice";
 import { rtkQueryErrorLogger } from "./middleware/errorLogger";
 
 // Create the root reducer separately so we can extract the RootState type
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   auth: authSliceReducer,
   alerts: alertsSliceReducer,
   products: productsSliceReducer,
+  cart: cartSliceReducer,
   [apiSlice.reducerPath]: apiSlice.reducer,
 });
 

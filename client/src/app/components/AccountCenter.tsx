@@ -49,7 +49,11 @@ export default function ({
           path="/products/all-products"
           toggleSidebar={toggleSidebar}
         />
-        <ACLink text="Go to your cart" path="#" toggleSidebar={toggleSidebar} />
+        <ACLink
+          text="Go to your cart"
+          path="/cart"
+          toggleSidebar={toggleSidebar}
+        />
         <ACLink
           text="View previously purchased items"
           path="#"
