@@ -9,6 +9,8 @@ import {
 import getShopifyCustomer from "../../../app/utils/helpers/getShopifyCustomer";
 import { showAlert, clearAlert } from "../alerts/alertsSlice";
 import { gql } from "graphql-request";
+import { setCartData, setCartId } from "../cart/cartSlice";
+import { getRedisCustomer } from "../../../services/redis";
 
 let customerAccessToken;
 if (typeof localStorage !== "undefined") {
@@ -87,7 +89,7 @@ export const extendedApi = apiSlice.injectEndpoints({
           }
         } catch (error: any) {
           const errorMessage = error.error
-            ? error.error.message
+            ? error.error.message.slice(0, 18)
             : error.message;
           lifecycleApi.dispatch(
             showAlert({
@@ -124,6 +126,11 @@ export const extendedApi = apiSlice.injectEndpoints({
           const { data: authData } = await lifecycleApi.queryFulfilled;
           if (authData.customer !== null) {
             lifecycleApi.dispatch(setCustomerData(authData.customer));
+            const redisCustomer = await getRedisCustomer(authData.customer.id);
+            lifecycleApi.dispatch(setCartId(redisCustomer.cartId));
+            if (localStorage.getItem("blissCartId")) {
+              localStorage.removeItem("blissCartId");
+            }
           } else if (authData.customer === null) {
           }
         } catch (error) {

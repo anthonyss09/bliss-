@@ -1,6 +1,6 @@
 import { Redis } from "@upstash/redis";
 
-export async function createRedisCustomer({
+export async function setRedisCustomer({
   customerId,
   cartId = "",
 }: {

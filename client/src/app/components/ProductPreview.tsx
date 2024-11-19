@@ -2,23 +2,32 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import {
+  useCreateCartMutation,
+  selectCartData,
+} from "../../lib/features/cart/cartSlice";
+import { useAppSelector } from "../../lib/hooks";
 
 interface props {
+  id: String;
   size: String;
   title: String;
   profile: String;
   productType: String;
   price: String;
-  id: String;
+  merchandiseId: String;
+  featuredImageUrl: String;
 }
 
 export default function ProductPreview({
+  id,
   size,
   title,
   profile,
   productType,
   price,
-  id,
+  merchandiseId,
+  featuredImageUrl,
 }: props) {
   var fit = true;
   if (size != "fit") {
@@ -26,11 +35,40 @@ export default function ProductPreview({
   }
 
   const pathname = usePathname();
+  const [createCart] = useCreateCartMutation();
+  const { cartData, cartId } = useAppSelector(selectCartData);
+
+  async function addCartItem() {
+    if (cartId === "gid://shopify/Cart/null") {
+      const cart = await createCart({
+        merchandiseId: product.variants.nodes[0].id,
+        productTitle: product.title,
+        variantTitle: product.title,
+        featuredImageUrl: product.featuredImage.url,
+      }).then(() => {
+        dispatch(
+          showAlert({
+            alertMessage: "Item added to cart!",
+            alertType: "success",
+          })
+        );
+      });
+    } else {
+      //add item to cart lines
+    }
+    setTimeout(() => {
+      dispatch(clearAlert(null));
+    }, 3000);
+    return;
+  }
 
   return (
     <aside className={`${fit ? "w-[50vw] md:w-[25vw]" : "w-[125px]"}`}>
       {pathname !== "/cart" && (
-        <button className="opacity-40 ml-4 hover:opacity-100">
+        <button
+          onClick={addCartItem}
+          className="opacity-40 ml-4 hover:opacity-100"
+        >
           {" "}
           <Image
             src="/assets/svgs/fastCart.svg"
@@ -49,7 +87,7 @@ export default function ProductPreview({
         >
           {" "}
           <Image
-            src="/assets/images/bottlesDouble.jpeg"
+            src={featuredImageUrl}
             alt="bliss bottles"
             fill
             sizes="(min-width:768px)  25vw,(min-width:1024px) 25vw, 50vw"
@@ -75,7 +113,10 @@ export default function ProductPreview({
             -
           </button>
           <p className="text-sm font-bold">1</p>
-          <button className="h-[28px] w-[28px] font-semibold bg-[#00000010] hover:bg-black/70 hover:text-white">
+          <button
+            onClick={addCartItem}
+            className="h-[28px] w-[28px] font-semibold bg-[#00000010] hover:bg-black/70 hover:text-white"
+          >
             +
           </button>
         </div>

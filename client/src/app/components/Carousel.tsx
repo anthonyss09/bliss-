@@ -23,6 +23,7 @@ export default function Carousel() {
               price="40.00"
               profile="Basil + Kiwi + Coriander"
               id="1"
+              featuredImageUrl="https://cdn.shopify.com/s/files/1/0623/2168/8645/files/bottlesDouble.jpg?v=1730221070"
             />
           </div>
         );

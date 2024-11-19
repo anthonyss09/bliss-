@@ -1,6 +1,6 @@
 import isEmail from "../helpers/isEmail";
-import { createRedisCustomer, getRedisCustomer } from "../../../services/redis";
-import { setCartId } from "../../../lib/features/cart/cartSlice";
+import { setRedisCustomer, getRedisCustomer } from "../../../services/redis";
+import { setCartId, setCartData } from "../../../lib/features/cart/cartSlice";
 import { AppDispatch } from "../../../lib/store";
 import getShopifyCustomer from "../helpers/getShopifyCustomer";
 
@@ -37,7 +37,7 @@ export default async function handleLogin({
         email: email,
         password: password,
       });
-      const redisCustomer = await createRedisCustomer({
+      const redisCustomer = await setRedisCustomer({
         customerId,
         cartId: "gid://shopify/Cart/null",
       });
@@ -54,7 +54,6 @@ export default async function handleLogin({
       response.data.customerAccessTokenCreate.customerAccessToken.accessToken;
     const shopifyData = await getShopifyCustomer(token);
     const redisCustomer: any = await getRedisCustomer(shopifyData.customer.id);
-    localStorage.setItem("blissCartId", JSON.stringify(redisCustomer.cartId));
     dispatch(setCartId(redisCustomer.cartId));
   }
 }

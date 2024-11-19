@@ -21,6 +21,7 @@ export const handlers = [
           product: {
             description: "test description",
             id: "testId",
+            featuredImage: { url: "https://testUrl.com" },
             priceRange: { maxVariantPrice: { amount: "testPrice" } },
             productType: "testProductType",
             tags: ["tag", "tag", "tag"],
@@ -33,6 +34,7 @@ export const handlers = [
                 node: {
                   description: "test description",
                   id: "testId",
+                  featuredImage: { url: "https://testUrl.com" },
                   priceRange: { maxVariantPrice: { amount: "testPrice" } },
                   productType: "testProductType",
                   tags: ["tag", "tag", "tag"],

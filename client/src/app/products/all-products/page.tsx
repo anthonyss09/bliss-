@@ -66,7 +66,8 @@ export default function AllProducts() {
     );
   } else if (isSuccess) {
     content = products.map((product: any) => {
-      const { title, tags, productType, id } = product.node;
+      const { title, tags, productType, id, featuredImage, variants } =
+        product.node;
       const profile = `${tags[0]} + ${tags[1]} + ${tags[2]}`;
       const price = product.node.priceRange.maxVariantPrice.amount;
       return (
@@ -78,6 +79,8 @@ export default function AllProducts() {
           price={price}
           productType={productType}
           id={id}
+          featuredImageUrl={featuredImage.url}
+          merchandiseId={variants.nodes[0].id}
         />
       );
     });

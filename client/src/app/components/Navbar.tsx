@@ -24,7 +24,7 @@ export default function Navbar() {
 
   const pathname = usePathname();
 
-  const { data: authenticationDat } = useLoginCustomerQuery({
+  const { data: authenticationData } = useLoginCustomerQuery({
     customerAccessToken: customerAccessToken,
   });
 
@@ -53,7 +53,7 @@ export default function Navbar() {
       return;
     }
     const el = document.getElementById("navbar");
-    const checkoutRow = document.getElementById("checkout-row");
+
     if (typeof window !== "undefined") {
       if (window.scrollY > yPosition.current && window.scrollY > 250) {
         closeNav();

@@ -22,6 +22,14 @@ export const extendedApi = apiSlice.injectEndpoints({
               tags
               description
               id
+              variants(first: 1) {
+                      nodes {
+                        id
+                      }
+                    }
+              featuredImage {
+                url
+              }
               priceRange {
                 maxVariantPrice {
                   amount
@@ -47,6 +55,14 @@ export const extendedApi = apiSlice.injectEndpoints({
                     description
                     id
                     productType
+                    variants(first: 1) {
+                      nodes {
+                        id
+                      }
+                    }
+                    featuredImage {
+                      url
+                    }
                     priceRange {
                       maxVariantPrice {
                         amount
