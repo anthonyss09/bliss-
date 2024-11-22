@@ -13,6 +13,10 @@ import Alert from "./Alert";
 import { selectAlertData } from "../../lib/features/alerts/alertsSlice";
 import { usePathname } from "next/navigation";
 import CheckoutRow from "./CheckoutRow";
+import {
+  useGetCartQuery,
+  selectCartData,
+} from "../../lib/features/cart/cartSlice";
 
 export default function Navbar() {
   const [sidebarDropped, setSidebarDropped] = useState(false);
@@ -27,6 +31,8 @@ export default function Navbar() {
   const { data: authenticationData } = useLoginCustomerQuery({
     customerAccessToken: customerAccessToken,
   });
+  const { cartId, cartCount } = useAppSelector(selectCartData);
+  const { data: cartData, isLoading, isSuccess } = useGetCartQuery(cartId);
 
   const yPosition = useRef(0);
   const windowWidth = useRef(0);
@@ -149,7 +155,7 @@ export default function Navbar() {
         toggleForm={toggleForm}
         formOpen={formOpen}
       />
-      <CheckoutRow pathname={pathname} />
+      {cartCount > 0 && <CheckoutRow pathname={pathname} />}
     </nav>
   );
 }

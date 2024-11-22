@@ -5,6 +5,7 @@ import { selectCartData } from "../../lib/features/cart/cartSlice";
 import { useAppSelector } from "../../lib/hooks";
 import Spinner from "../components/Spinner";
 import CartHeader from "../components/CartHeader";
+import Link from "next/link";
 
 export default function CartPage() {
   const { cartData, cartCount, cartLoading } = useAppSelector(selectCartData);
@@ -44,7 +45,16 @@ export default function CartPage() {
       });
     }
   } else {
-    content = <div>No items in cart.</div>;
+    content = (
+      <div className="my-auto mx-auto">
+        <p className="font-medium mb-4">No items in Cart.</p>
+        <Link href="/products/all-products">
+          <div className="h-12 w-32 border-2 bg-white border-blue-dark mx-auto grid place-items-center tracking-wide text-sm font-semibold hover:bg-black hover:border-0 hover:text-white">
+            Go Shop
+          </div>
+        </Link>
+      </div>
+    );
   }
 
   return (
