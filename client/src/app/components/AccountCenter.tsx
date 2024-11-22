@@ -2,7 +2,11 @@ import { useAppDispatch, useAppSelector } from "../../lib/hooks";
 import { logoutCustomer } from "../../lib/features/auth/authSlice";
 import ACLink from "./ACLink";
 import { selectAuthData } from "../../lib/features/auth/authSlice";
-import { setCartId, setCartData } from "../../lib/features/cart/cartSlice";
+import {
+  setCartId,
+  setCartData,
+  setCartCount,
+} from "../../lib/features/cart/cartSlice";
 
 export default function ({
   formOpen,
@@ -21,6 +25,7 @@ export default function ({
     dispatch(logoutCustomer(null));
     dispatch(setCartId("gid://shopify/Cart/null"));
     dispatch(setCartData(null));
+    dispatch(setCartCount(0));
   }
 
   return (

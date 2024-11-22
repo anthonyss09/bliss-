@@ -17,7 +17,7 @@ export default function CartPage() {
 
   if (cartLoading) {
     content = <Spinner />;
-  } else if (cartCount) {
+  } else if (cartData && cartCount) {
     items = cartData.cart.lines.edges;
     if (items.length) {
       content = items.map((item: any) => {
@@ -42,14 +42,14 @@ export default function CartPage() {
           />
         );
       });
-    } else {
-      content = <div>No items in cart.</div>;
     }
+  } else {
+    content = <div>No items in cart.</div>;
   }
 
   return (
     <div className=" mt-24 sm:mt-32 border-b-[#00000010] border-b-4 pb-8 mb-4 md:grid md:grid-cols-2 md:grid-rows-3 md:h-[600px] relative">
-      {cartData.cart !== null && (
+      {cartCount > 0 && (
         <CartHeader
           cartCount={cartCount}
           tax={tax}
