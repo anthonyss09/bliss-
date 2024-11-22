@@ -28,7 +28,7 @@ export const handlers = [
 const server = setupServer(...handlers);
 
 // Enable API mocking before tests.
-beforeEach(() => server.listen());
+beforeEach(() => server.listen({ onUnhandledRequest: "bypass" }));
 
 // Reset any runtime request handlers we may add during the tests.
 afterEach(() => server.resetHandlers());

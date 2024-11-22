@@ -5,8 +5,8 @@ import { setupServer } from "msw/node";
 import { screen, waitFor, fireEvent } from "@testing-library/react";
 // We're using our own custom render function and not RTL's render.
 import { renderWithProviders } from "../src/app/utils/test-utils";
-import LoginForm from "../src/app/components/LoginForm";
-import AccountCenter from "../src/app/components/AccountCenter";
+import Navbar from "../src/app/components/Navbar";
+import CartPage from "../src/app/cart/page";
 
 export const handlers = [
   http.post(
@@ -19,6 +19,31 @@ export const handlers = [
           customer: { firstName: "foobar", id: "111" },
           customerAccessTokenCreate: { customerAccessToken: "someToken" },
           customerCreate: { customer: { firstName: "foobar", id: "" } },
+          cart: {
+            lines: {
+              edges: [
+                {
+                  node: {
+                    attributes: [
+                      { key: "key", value: "value" },
+                      { key: "key", value: "value" },
+                      {
+                        key: "key",
+                        value:
+                          "https://cdn.shopify.com/s/files/1/0623/2168/8645/files/bottlesDouble.jpg?v=1730221070",
+                      },
+                    ],
+                    quantity: 3,
+                    merchandise: { id: "testId" },
+                  },
+                },
+              ],
+            },
+            cost: {
+              totalAmount: { amount: 0 },
+              subtotalAmount: { amount: 0 },
+            },
+          },
         },
       });
     }
@@ -36,26 +61,16 @@ afterEach(() => server.resetHandlers());
 // Disable API mocking after the tests are done.
 afterEach(() => server.close());
 
-test("graphql client returns data and component renders data", async () => {
-  const { container } = renderWithProviders(
+test("getCart query returns data and renders on CartPage", async () => {
+  renderWithProviders(
     <>
-      <LoginForm formOpen={true} toggleForm={() => {}} />
-      <AccountCenter formOpen={true} toggleSidebar={() => {}} />
+      <Navbar />
+      <CartPage />
     </>
   );
 
-  const email: HTMLInputElement = screen.getByLabelText("Email");
-  const password: HTMLInputElement = screen.getByLabelText("Password");
-  fireEvent.change(email, { target: { value: "test1@gmail.com" } });
-  fireEvent.change(password, { target: { value: "123456" } });
-  fireEvent.click(screen.getAllByText("Register")[0]);
-  fireEvent.click(screen.getAllByText("Register")[1]);
-
-  expect(password.value).toBe("123456");
-  expect(email.value).toBe("test1@gmail.com");
-
-  await waitFor(() => {
-    const p = screen.getByText("Welcome back foobar!");
-    expect(p).toBeDefined();
+  await waitFor(async () => {
+    const cartCount = screen.findByDisplayValue(3);
+    expect(cartCount).toBeDefined();
   });
 });

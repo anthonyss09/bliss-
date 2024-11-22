@@ -26,6 +26,27 @@ export const handlers = [
           customer: { firstName: "foobar", id: "111" },
           customerAccessTokenCreate: { customerAccessToken: "someToken" },
           customerCreate: { customer: { firstName: "foobar", id: "" } },
+          cart: {
+            lines: {
+              edges: [
+                {
+                  node: {
+                    attributes: [
+                      { key: "key", value: "value" },
+                      { key: "key", value: "value" },
+                      ,
+                      { key: "key", value: "value" },
+                    ],
+                    quantity: 3,
+                  },
+                },
+              ],
+            },
+            cost: {
+              totalAmount: { amount: 0 },
+              subtotalAmount: { amount: 0 },
+            },
+          },
         },
       });
     }
@@ -35,7 +56,7 @@ export const handlers = [
 const server = setupServer(...handlers);
 
 // Enable API mocking before tests.
-beforeEach(() => server.listen());
+beforeEach(() => server.listen({ onUnhandledRequest: "bypass" }));
 
 // Reset any runtime request handlers we may add during the tests.
 afterEach(() => server.resetHandlers());

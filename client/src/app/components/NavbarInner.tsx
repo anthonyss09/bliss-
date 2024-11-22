@@ -2,6 +2,11 @@ import NavLink from "./NavLink";
 import Image from "next/image";
 import Logo from "./Logo";
 import Link from "next/link";
+import {
+  selectCartData,
+  useGetCartQuery,
+} from "../../lib/features/cart/cartSlice";
+import { useAppSelector, useAppDispatch } from "../../lib/hooks";
 
 export default function NavbarInner({
   sidebarDropped,
@@ -14,6 +19,11 @@ export default function NavbarInner({
   toggleForm: (bool: boolean) => void;
   formOpen: boolean;
 }) {
+  const { cartId } = useAppSelector(selectCartData);
+  const dispatch = useAppDispatch();
+  const { data: cartData, isLoading, isSuccess } = useGetCartQuery(cartId);
+  const { cartCount } = useAppSelector(selectCartData);
+
   return (
     <div
       id="navbar-inner"
@@ -37,13 +47,15 @@ export default function NavbarInner({
         />
       </button>
       <Logo toggleSidebar={toggleSidebar} />
-      <Link href="/cart">
-        {" "}
+      <Link href="/cart" className="relative">
+        <div className="absolute top-[-16px] left-4 font-semibold sm:hidden">
+          {cartCount}
+        </div>
         <Image
           src="/assets/svgs/cart.svg"
           alt="cart icon"
-          height={32}
-          width={32}
+          height={28}
+          width={28}
           className="sm:hidden"
         />
       </Link>
@@ -51,8 +63,10 @@ export default function NavbarInner({
         <NavLink name="Home" path="/" />
 
         <NavLink name="Shop" path="/products/all-products" />
-        <Link href="/cart">
-          {" "}
+        <Link href="/cart" className="relative">
+          <div className="absolute top-[-13px] left-[12px] font-semibold text-sm">
+            {cartCount}
+          </div>
           <Image
             src="/assets/svgs/cart.svg"
             alt="cart icon"

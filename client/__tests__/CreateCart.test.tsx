@@ -9,9 +9,6 @@ import SingleProduct from "../src/app/products/single-product/page";
 import Navbar from "../src/app/components/Navbar";
 
 export const handlers = [
-  http.post("https://massive-foal-29983.upstash.io/pipeline", () => {
-    return { customerId: "testId", cartId: "testId" };
-  }),
   http.post(
     `https://${process.env.NEXT_PUBLIC_SHOP_NAME}.myshopify.com/api/${process.env.NEXT_PUBLIC_VERSION}/graphql.json`,
     () => {
@@ -55,6 +52,27 @@ export const handlers = [
               startCursor: null,
             },
           },
+          cart: {
+            lines: {
+              edges: [
+                {
+                  node: {
+                    attributes: [
+                      { key: "key", value: "value" },
+                      { key: "key", value: "value" },
+                      ,
+                      { key: "key", value: "value" },
+                    ],
+                    quantity: 3,
+                  },
+                },
+              ],
+            },
+            cost: {
+              totalAmount: { amount: 0 },
+              subtotalAmount: { amount: 0 },
+            },
+          },
         },
       });
     }
@@ -64,7 +82,7 @@ export const handlers = [
 const server = setupServer(...handlers);
 
 // Enable API mocking before tests.
-beforeEach(() => server.listen());
+beforeEach(() => server.listen({ onUnhandledRequest: "bypass" }));
 
 // Reset any runtime request handlers we may add during the tests.
 afterEach(() => server.resetHandlers());

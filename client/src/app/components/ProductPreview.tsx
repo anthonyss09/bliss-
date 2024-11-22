@@ -6,17 +6,19 @@ import {
   useCreateCartMutation,
   selectCartData,
 } from "../../lib/features/cart/cartSlice";
-import { useAppSelector } from "../../lib/hooks";
+import { useAppSelector, useAppDispatch } from "../../lib/hooks";
+import { showAlert, clearAlert } from "../../lib/features/alerts/alertsSlice";
 
 interface props {
-  id: String;
-  size: String;
-  title: String;
-  profile: String;
-  productType: String;
-  price: String;
-  merchandiseId: String;
-  featuredImageUrl: String;
+  id: string;
+  size: string;
+  title: string;
+  profile: string;
+  productType: string;
+  price: string;
+  merchandiseId: string;
+  featuredImageUrl: string;
+  quantity: number;
 }
 
 export default function ProductPreview({
@@ -28,6 +30,7 @@ export default function ProductPreview({
   price,
   merchandiseId,
   featuredImageUrl,
+  quantity,
 }: props) {
   var fit = true;
   if (size != "fit") {
@@ -35,16 +38,17 @@ export default function ProductPreview({
   }
 
   const pathname = usePathname();
+  const dispatch = useAppDispatch();
   const [createCart] = useCreateCartMutation();
   const { cartData, cartId } = useAppSelector(selectCartData);
 
   async function addCartItem() {
     if (cartId === "gid://shopify/Cart/null") {
       const cart = await createCart({
-        merchandiseId: product.variants.nodes[0].id,
-        productTitle: product.title,
-        variantTitle: product.title,
-        featuredImageUrl: product.featuredImage.url,
+        merchandiseId: merchandiseId,
+        productTitle: title,
+        variantTitle: title,
+        featuredImageUrl: featuredImageUrl,
       }).then(() => {
         dispatch(
           showAlert({
@@ -112,7 +116,7 @@ export default function ProductPreview({
           <button className="h-[28px] w-[28px] font-semibold bg-[#00000010] hover:bg-black/50 hover:text-white">
             -
           </button>
-          <p className="text-sm font-bold">1</p>
+          <p className="text-sm font-bold">{quantity}</p>
           <button
             onClick={addCartItem}
             className="h-[28px] w-[28px] font-semibold bg-[#00000010] hover:bg-black/70 hover:text-white"

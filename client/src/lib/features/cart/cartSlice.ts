@@ -32,9 +32,15 @@ if (typeof localStorage !== "undefined") {
 }
 
 const initialState = {
+  cartLoading: true,
   cartCount: 0,
   cartId,
-  cartData: null,
+  cartData: {
+    cart: {
+      lines: { edges: [] },
+      cost: { totalAmount: { amount: 0 }, subtotalAmount: { amount: 0 } },
+    },
+  },
   customerAccessToken,
 };
 
@@ -86,7 +92,7 @@ const extendedApi = apiSlice.injectEndpoints({
               JSON.stringify(cartData.cartCreate.cart.id)
             );
           }
-        } catch (error) {
+        } catch (error: any) {
           const errorMessage = error.error
             ? error.error.message.slice(0, 18)
             : error.message;
@@ -104,6 +110,75 @@ const extendedApi = apiSlice.injectEndpoints({
       },
       invalidatesTags: ["Cart", "Customer"],
     }),
+
+    getCart: build.query({
+      query: (id) => ({
+        document: gql`query {
+          cart(id: "${id}") {
+            id
+            createdAt
+            updatedAt
+            checkoutUrl
+            lines(first: 10) {
+              edges {
+                node {
+                  id
+                  quantity
+                  merchandise {
+                    ... on ProductVariant {
+                      id
+                    }
+                  }
+                  attributes {
+                    key
+                    value
+                  }
+                }
+              }
+            }
+          cost {
+              totalAmount {
+                amount
+                currencyCode
+              }
+              subtotalAmount {
+                amount 
+                currencyCode
+              }
+              totalTaxAmount {
+                amount
+                currencyCode
+              }
+              totalDutyAmount {
+                amount
+                currencyCode
+              }
+            }
+          }
+        }`,
+      }),
+      async onQueryStarted(id, { dispatch, queryFulfilled, getState }) {
+        try {
+          const { data: cartData } = await queryFulfilled;
+          if (cartData.cart !== null) {
+            console.log("Cart retrieved,", cartData);
+            let cartCount = 0;
+            cartData.cart.lines.edges.map((item: any) => {
+              cartCount += item.node.quantity;
+            });
+            dispatch(setCartCount(cartCount));
+            dispatch(setCartData(cartData));
+          } else {
+            console.log("null data,", cartData);
+          }
+          dispatch(setCartLoading(false));
+        } catch (error) {
+          console.log("An error occured fetching cart.", error);
+          dispatch(setCartLoading(false));
+        }
+      },
+      providesTags: ["Cart"],
+    }),
   }),
 });
 
@@ -120,13 +195,17 @@ export const cartSlice = createSlice({
     setCartCount(state, action) {
       state.cartCount = action.payload;
     },
+    setCartLoading(state, action) {
+      state.cartLoading = action.payload;
+    },
   },
 });
 
 export default cartSlice.reducer;
 
-export const { setCartId, setCartData, setCartCount } = cartSlice.actions;
+export const { setCartId, setCartData, setCartCount, setCartLoading } =
+  cartSlice.actions;
 
 export const selectCartData = (state: RootState) => state.cart;
 
-export const { useCreateCartMutation } = extendedApi;
+export const { useCreateCartMutation, useGetCartQuery } = extendedApi;
