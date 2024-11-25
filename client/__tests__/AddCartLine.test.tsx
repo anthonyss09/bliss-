@@ -53,11 +53,12 @@ export const handlers = [
             },
           },
           cart: {
-            id: "gid://shopify/Cart/null",
+            id: "gid://shopify/Cart/!null",
             lines: {
               edges: [
                 {
                   node: {
+                    merchandise: { id: "testId" },
                     attributes: [
                       { key: "key", value: "value" },
                       { key: "key", value: "value" },
@@ -91,7 +92,7 @@ afterEach(() => server.resetHandlers());
 // Disable API mocking after the tests are done.
 afterEach(() => server.close());
 
-test("create cart mutation", async () => {
+test("add cart line mutation", async () => {
   renderWithProviders(
     <>
       <SingleProduct />

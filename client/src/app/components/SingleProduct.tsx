@@ -2,9 +2,11 @@ import Image from "next/image";
 import {
   useCreateCartMutation,
   selectCartData,
+  useAddCartLineMutation,
 } from "../../lib/features/cart/cartSlice";
 import { useAppSelector, useAppDispatch } from "../../lib/hooks";
 import { showAlert, clearAlert } from "../../lib/features/alerts/alertsSlice";
+import addCartItem from "../utils/helpers/addCartItem";
 
 interface props {
   product: {
@@ -26,32 +28,37 @@ interface props {
 
 export default function SingleProduct({ product }: props) {
   const [createCart] = useCreateCartMutation();
+  const [addCartLine] = useAddCartLineMutation();
   const { cartData, cartId } = useAppSelector(selectCartData);
+  const {
+    cart: {
+      lines: { edges: cartEdges },
+    },
+  } = cartData;
   const dispatch = useAppDispatch();
 
-  async function addCartItem() {
-    if (cartId === "gid://shopify/Cart/null") {
-      const cart = await createCart({
-        merchandiseId: product.variants.nodes[0].id,
-        productTitle: product.title,
-        variantTitle: product.title,
-        featuredImageUrl: product.featuredImage.url,
-      }).then(() => {
-        dispatch(
-          showAlert({
-            alertMessage: "Item added to cart!",
-            alertType: "success",
-          })
-        );
-      });
-    } else {
-      //add item to cart lines
-    }
-    setTimeout(() => {
-      dispatch(clearAlert(null));
-    }, 3000);
-    return;
-  }
+  // async function addCartItem() {
+  //   if (cartId === "gid://shopify/Cart/null") {
+  //     const cart = await createCart({
+  //       merchandiseId: product.variants.nodes[0].id,
+  //       productTitle: product.title,
+  //       variantTitle: product.title,
+  //       featuredImageUrl: product.featuredImage.url,
+  //     }).then(() => {
+  //       dispatch(
+  //         showAlert({
+  //           alertMessage: "Item added to cart!",
+  //           alertType: "success",
+  //         })
+  //       );
+  //     });
+  //   } else {
+  //   }
+  //   setTimeout(() => {
+  //     dispatch(clearAlert(null));
+  //   }, 3000);
+  //   return;
+  // }
   return (
     <aside className={`sm:flex sm:items-center sm:gap-12 `}>
       <div className={`w-[300px] h-[300px] relative`}>
@@ -75,7 +82,19 @@ export default function SingleProduct({ product }: props) {
         </p>
         <p className="mb-4 text-sm">{product.description}</p>
         <button
-          onClick={addCartItem}
+          onClick={() => {
+            addCartItem({
+              dispatch,
+              createCart,
+              addCartLine,
+              cartId,
+              cartEdges,
+              merchandiseId: product.variants.nodes[0].id,
+              variantTitle: product.title,
+              productTitle: product.title,
+              featuredImageUrl: product.featuredImage.url,
+            });
+          }}
           className="h-12 w-full font-semibold bg-[#0f7e7e70] hover:shadow-2xl hover:text-white hover:bg-[#0f7e7e]"
         >
           Add to cart

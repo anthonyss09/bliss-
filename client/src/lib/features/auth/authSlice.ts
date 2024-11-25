@@ -9,7 +9,7 @@ import {
 import getShopifyCustomer from "../../../app/utils/helpers/getShopifyCustomer";
 import { showAlert, clearAlert } from "../alerts/alertsSlice";
 import { gql } from "graphql-request";
-import { setCartData, setCartId } from "../cart/cartSlice";
+import { setCartId } from "../cart/cartSlice";
 import { getRedisCustomer } from "../../../services/redis";
 
 let customerAccessToken;
@@ -127,7 +127,9 @@ export const extendedApi = apiSlice.injectEndpoints({
           if (authData.customer !== null) {
             lifecycleApi.dispatch(setCustomerData(authData.customer));
             const redisCustomer = await getRedisCustomer(authData.customer.id);
-            lifecycleApi.dispatch(setCartId(redisCustomer.cartId));
+            if (redisCustomer !== null) {
+              lifecycleApi.dispatch(setCartId(redisCustomer.cartId));
+            }
             if (localStorage.getItem("blissCartId")) {
               localStorage.removeItem("blissCartId");
             }
@@ -175,7 +177,6 @@ export const extendedApi = apiSlice.injectEndpoints({
             lifecycleApi.dispatch(
               setCustomerData(response.data.customerCreate.customer)
             );
-          } else if (response.customer === null) {
           }
         } catch (error: any) {
           const errorMessage = error.error

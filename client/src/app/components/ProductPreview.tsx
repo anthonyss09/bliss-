@@ -4,10 +4,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   useCreateCartMutation,
+  useAddCartLineMutation,
   selectCartData,
 } from "../../lib/features/cart/cartSlice";
 import { useAppSelector, useAppDispatch } from "../../lib/hooks";
 import { showAlert, clearAlert } from "../../lib/features/alerts/alertsSlice";
+import addCartItem from "../utils/helpers/addCartItem";
 
 interface props {
   id: string;
@@ -40,37 +42,31 @@ export default function ProductPreview({
   const pathname = usePathname();
   const dispatch = useAppDispatch();
   const [createCart] = useCreateCartMutation();
+  const [addCartLine] = useAddCartLineMutation();
   const { cartData, cartId } = useAppSelector(selectCartData);
-
-  async function addCartItem() {
-    if (cartId === "gid://shopify/Cart/null") {
-      const cart = await createCart({
-        merchandiseId: merchandiseId,
-        productTitle: title,
-        variantTitle: title,
-        featuredImageUrl: featuredImageUrl,
-      }).then(() => {
-        dispatch(
-          showAlert({
-            alertMessage: "Item added to cart!",
-            alertType: "success",
-          })
-        );
-      });
-    } else {
-      //add item to cart lines
-    }
-    setTimeout(() => {
-      dispatch(clearAlert(null));
-    }, 3000);
-    return;
-  }
+  const {
+    cart: {
+      lines: { edges: cartEdges },
+    },
+  } = cartData;
 
   return (
     <aside className={`${fit ? "w-[50vw] md:w-[25vw]" : "w-[125px]"}`}>
       {pathname !== "/cart" && (
         <button
-          onClick={addCartItem}
+          onClick={() => {
+            addCartItem({
+              dispatch,
+              createCart,
+              addCartLine,
+              cartId,
+              cartEdges,
+              merchandiseId,
+              variantTitle: title,
+              productTitle: title,
+              featuredImageUrl,
+            });
+          }}
           className="opacity-40 ml-4 hover:opacity-100"
         >
           {" "}
@@ -118,7 +114,19 @@ export default function ProductPreview({
           </button>
           <p className="text-sm font-bold">{quantity}</p>
           <button
-            onClick={addCartItem}
+            onClick={() => {
+              addCartItem({
+                dispatch,
+                createCart,
+                addCartLine,
+                cartId,
+                cartEdges,
+                merchandiseId,
+                variantTitle: title,
+                productTitle: title,
+                featuredImageUrl,
+              });
+            }}
             className="h-[28px] w-[28px] font-semibold bg-[#00000010] hover:bg-black/70 hover:text-white"
           >
             +

@@ -19,9 +19,6 @@ export default function NavbarInner({
   toggleForm: (bool: boolean) => void;
   formOpen: boolean;
 }) {
-  const { cartId } = useAppSelector(selectCartData);
-  const dispatch = useAppDispatch();
-  const { data: cartData, isLoading, isSuccess } = useGetCartQuery(cartId);
   const { cartCount } = useAppSelector(selectCartData);
 
   return (

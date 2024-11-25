@@ -47,6 +47,59 @@ const initialState = {
 const extendedApi = apiSlice.injectEndpoints({
   overrideExisting: true,
   endpoints: (build) => ({
+    addCartLine: build.mutation({
+      query: ({
+        cartId,
+        productTitle,
+        variantTitle,
+        featuredImageUrl,
+        merchandiseId,
+        attributes,
+        quantity,
+      }) => ({
+        document: gql`
+          mutation {
+            cartLinesAdd(cartId: "${cartId}", lines: {merchandiseId: "${merchandiseId}" quantity: ${quantity} attributes: [{key: "title" value: "${productTitle}"},{key: "variantTitle" value: "${variantTitle}"}, {key: "featuredImageUrl" value: "${featuredImageUrl}"} ]}) {
+              cart {
+                id
+              }
+            }
+          }
+        `,
+      }),
+      async onQueryStarted(
+        { cartId, lines },
+        { dispatch, getState, queryFulfilled }
+      ) {
+        try {
+          const { data: cartData } = await queryFulfilled;
+          dispatch(
+            showAlert({
+              alertMessage: "Item added to cart!",
+              alertType: "success",
+            })
+          );
+          setTimeout(() => {
+            dispatch(clearAlert({}));
+          }, 2000);
+        } catch (error) {
+          const errorMessage = error.error
+            ? error.error.message.slice(0, 18)
+            : error.message;
+          dispatch(
+            showAlert({
+              alertMessage: errorMessage,
+              alertType: "danger",
+            })
+          );
+          setTimeout(() => {
+            dispatch(clearAlert({}));
+          }, 2000);
+          console.log("some error occured adding cart line.", error);
+        }
+      },
+      invalidatesTags: ["Cart", "Customer"],
+    }),
     createCart: build.mutation({
       query: ({
         merchandiseId,
@@ -77,6 +130,15 @@ const extendedApi = apiSlice.injectEndpoints({
       ) {
         try {
           const { data: cartData } = await queryFulfilled;
+          dispatch(
+            showAlert({
+              alertMessage: "Item added to cart!",
+              alertType: "success",
+            })
+          );
+          setTimeout(() => {
+            dispatch(clearAlert({}));
+          }, 2000);
           dispatch(setCartId(cartData.cartCreate?.cart?.id));
           const state = getState() as RootState;
           const customer = state.auth.customer;
@@ -166,6 +228,7 @@ const extendedApi = apiSlice.injectEndpoints({
             cartData.cart.lines.edges.map((item: any) => {
               cartCount += item.node.quantity;
             });
+            dispatch(setCartId(cartData.cart.id));
             dispatch(setCartCount(cartCount));
             dispatch(setCartData(cartData));
           } else {
@@ -208,4 +271,8 @@ export const { setCartId, setCartData, setCartCount, setCartLoading } =
 
 export const selectCartData = (state: RootState) => state.cart;
 
-export const { useCreateCartMutation, useGetCartQuery } = extendedApi;
+export const {
+  useCreateCartMutation,
+  useGetCartQuery,
+  useAddCartLineMutation,
+} = extendedApi;
