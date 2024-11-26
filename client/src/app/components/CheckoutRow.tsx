@@ -1,6 +1,17 @@
 import { useEffect } from "react";
+import { useAppSelector } from "../../lib/hooks";
+import { selectCartData } from "../../lib/features/cart/cartSlice";
 
 export default function CheckoutRow({ pathname }: { pathname: string }) {
+  const {
+    cartData: {
+      cart: {
+        cost: {
+          totalAmount: { amount },
+        },
+      },
+    },
+  } = useAppSelector(selectCartData);
   function handleScroll(e: any) {
     const checkoutRow = document.getElementById("checkout-row");
     if (typeof window !== "undefined") {
@@ -38,9 +49,9 @@ export default function CheckoutRow({ pathname }: { pathname: string }) {
       {" "}
       <div className="w-full flex justify-between mb-4">
         <p className="font-semibold sm:text-lg">Total:</p>
-        <p className="font-semibold sm:text-lg">value</p>
+        <p className="font-semibold sm:text-lg">${Number(amount).toFixed(0)}</p>
       </div>
-      <button className="h-12 w-full bg-[#bed3fb] hover:bg-[#2b9df0] hover:text-white font-semibold tracking-wide">
+      <button className="h-12 w-full bg-[#2b9df090] hover:bg-[#2b9df0] hover:text-white font-semibold tracking-wide">
         Checkout
       </button>
     </div>

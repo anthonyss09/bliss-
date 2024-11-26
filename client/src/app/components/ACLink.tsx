@@ -16,7 +16,7 @@ export default function ACLink({
         toggleSidebar(false);
       }}
     >
-      <li className="mx-8 text-sm text-md tracking-wide rounded-[48px] hover:border-[#2b9df0] duration-300 text-black/70 font-medium">
+      <li className="mx-8 text-sm  tracking-wide rounded-[48px] hover:border-[#2b9df0] duration-300 text-black/50 font-semibold hover:text-black">
         {text}
       </li>
     </Link>

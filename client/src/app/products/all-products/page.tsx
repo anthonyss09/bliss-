@@ -68,6 +68,7 @@ export default function AllProducts() {
     content = products.map((product: any) => {
       const { title, tags, productType, id, featuredImage, variants } =
         product.node;
+      console.log("product", product.node);
       const profile = `${tags[0]} + ${tags[1]} + ${tags[2]}`;
       const price = product.node.priceRange.maxVariantPrice.amount;
       return (
@@ -81,6 +82,7 @@ export default function AllProducts() {
           id={id}
           featuredImageUrl={featuredImage.url}
           merchandiseId={variants.nodes[0].id}
+          quantity={0}
         />
       );
     });
@@ -102,7 +104,7 @@ export default function AllProducts() {
         </p>
       </header>
       <main className="border-b-4 pt-8 mb-4 border-[#00000005] border-t-2">
-        <div className="min-h-[300px] w-full flex flex-wrap justify-around gap-16 mb-4 sm:gap-12 md:gap-16 lg:gap-20">
+        <div className="min-h-[300px] w-full flex flex-wrap justify-around gap-16 px-4 mb-4 sm:gap-12 md:gap-16 lg:gap-20">
           {content}
         </div>
         <div className="w-full border-[#00000005] border-t-2 py-4">

@@ -88,6 +88,7 @@ export const extendedApi = apiSlice.injectEndpoints({
             lifecycleApi.dispatch(setCustomerData(customerData.customer));
           }
         } catch (error: any) {
+          console.log(error.message);
           const errorMessage = error.error
             ? error.error.message.slice(0, 18)
             : error.message;

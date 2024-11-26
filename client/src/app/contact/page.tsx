@@ -110,7 +110,7 @@ export default function Contact() {
           </div>
           <div className="p-2">
             {" "}
-            <button className="h-12 w-full bg-[#3111f330] tracking-wide font-medium rounded-lg hover:bg-[#3111f370] hover:text-white">
+            <button className="h-12 w-full bg-[#3111f330] tracking-wide font-medium rounded-sm hover:bg-[#3111f370] hover:text-white">
               Send
             </button>
           </div>

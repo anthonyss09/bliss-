@@ -73,7 +73,7 @@ export default function LoginForm({
       {isLoading && <Spinner />}
       <form
         onSubmit={handleSubmit}
-        className={`pb-8 mb-4 mt-8 left-0 absolute duration-500 ease-in-out bg-white flex flex-col z-[60] top-[216px] sm:top-[96px] sm:shadow-xl sm:border-[2px] sm:border-[#3111f310] sm:rounded-2xl ${
+        className={`pb-8 mb-4 mt-0 left-0 absolute duration-500 ease-in-out bg-white flex flex-col z-[60] top-[216px] sm:top-[96px] sm:shadow-xl sm:border-[2px] sm:border-[#3111f310] sm:rounded-2xl ${
           formOpen
             ? "h-[440px] overflow-y-scroll w-full sm:h-fit sm:w-[500px] translate-x-0 sm:ml-[50%] sm:translate-x-[-50%]  sm:fixed sm:overflow-auto"
             : "z-[-10] translate-x-[-500px]"
@@ -144,12 +144,12 @@ export default function LoginForm({
             value={password}
             inputType="password"
           />
-        </div>
-        <div className="">
-          {" "}
-          <button className="h-12 w-[320px] bg-[#3111f330] text-black font-medium tracking-wide shadow-lg sm:w-[352px] hover:bg-[#3111f370] hover:text-white">
-            {isLogin ? "Login" : "Register"}
-          </button>
+          <div className="w-full flex justify-center">
+            {" "}
+            <button className="h-12 w-full mt-4 bg-[#3111f330] text-black font-medium tracking-wide shadow-sm sm:w-[352px] hover:bg-[#3111f370] hover:text-white">
+              {isLogin ? "Login" : "Register"}
+            </button>
+          </div>
         </div>
       </form>
     </>

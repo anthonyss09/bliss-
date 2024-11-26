@@ -21,7 +21,7 @@ export default function BigSidebar({
       } ${formOpen ? " w-screen" : "w-[212px]"}`}
     >
       <button
-        className=" mt-4 mb-4  p-2 text-xl font-semibold bg-[#00000020] hover:bg-[#00000010]"
+        className=" mt-4  p-2 text-xl font-semibold bg-[#00000020] hover:bg-[#00000010]"
         onClick={() => {
           toggleSidebar(!sidebarDropped);
           toggleForm(false);
@@ -31,15 +31,15 @@ export default function BigSidebar({
           height={20}
           width={20}
           src="/assets/svgs/closeX.svg"
-          alt="arrow left"
+          alt="close button"
         />
       </button>{" "}
       <div
         id="sidebar-header"
-        className="h-20 flex justify-between items-center bg-[#bed3fb] bg-white border-t-2 border-t-[#00000005]"
+        className="h-20 flex justify-center items-center bg-[#bed3fb] bg-white border-t-2 border-t-[#00000005]"
       >
         <Logo toggleSidebar={toggleSidebar} />
-        <div className="px-4 bg-white">
+        {/* <div className="px-4 bg-white">
           {" "}
           <Image
             height={64}
@@ -48,19 +48,19 @@ export default function BigSidebar({
             alt="jasmine flower"
             className={`${formOpen ? "" : ""}`}
           />
-        </div>
+        </div> */}
       </div>
       <div
         id="sidebar-taskbar"
-        className={`h-24 w-full flex items-center justify-between border-t-2 border-t-[#00000005] bg-white`}
+        className={`w-full flex items-center mb-12 justify-between border-t-2 border-b-2 border-[#00000005] bg-white`}
       >
         {" "}
         <button
           onClick={() => {
             toggleForm(!formOpen);
           }}
-          className={`h-12 w-[128px] font-semibold text-left pl-4 text-white bg-[#3111f3] ${
-            formOpen ? "bg-[#3111f3] " : ""
+          className={`h-16 w-[128px] font-semibold text-left pl-4 text-white tracking-wide duration-500 ${
+            formOpen ? "bg-[#3111f3]" : "bg-[#3111f3]"
           }`}
         >
           Menu
@@ -83,7 +83,7 @@ export default function BigSidebar({
         </button>
       </div>
       <ul
-        className={`my-0 flex flex-col items-center gap-4 duration-300 ease-in-out ${
+        className={`flex flex-col items-center justify-center gap-8 duration-300 ease-in-out  ${
           formOpen ? "w-0 overflow-hidden" : ""
         }`}
       >

@@ -80,14 +80,15 @@ export default function Navbar() {
 
   function toggleSidebar(bool: boolean) {
     const body = document.getElementById("body");
-    setSidebarDropped(bool);
 
     if (bool && body) {
       body.style.overflow = "hidden";
+      body.style.height = "100vh";
     } else if (!bool && body) {
       body.style.overflow = "visible";
       toggleForm(false);
     }
+    setSidebarDropped(bool);
 
     const childrenBody = document.getElementById("children-body");
 
@@ -127,35 +128,37 @@ export default function Navbar() {
     };
   }, []);
   return (
-    <nav
-      id="navbar"
-      className={`w-screen fixed top-0 z-30  bg-white duration-700 ease-in-out`}
-    >
+    <>
       <Alert
         alertMessage={alertMessage}
         showAlert={showAlert}
         alertType={alertType}
-      />
-      {customer.id ? (
-        <AccountCenter formOpen={formOpen} toggleSidebar={toggleSidebar} />
-      ) : (
-        <LoginForm formOpen={formOpen} toggleForm={toggleForm} />
-      )}
+      />{" "}
+      <nav
+        id="navbar"
+        className={`w-screen fixed top-0 z-30  bg-white duration-700 ease-in-out`}
+      >
+        {customer.id ? (
+          <AccountCenter formOpen={formOpen} toggleSidebar={toggleSidebar} />
+        ) : (
+          <LoginForm formOpen={formOpen} toggleForm={toggleForm} />
+        )}
 
-      <NavbarInner
-        sidebarDropped={sidebarDropped}
-        toggleSidebar={toggleSidebar}
-        formOpen={formOpen}
-        toggleForm={toggleForm}
-      />
+        <NavbarInner
+          sidebarDropped={sidebarDropped}
+          toggleSidebar={toggleSidebar}
+          formOpen={formOpen}
+          toggleForm={toggleForm}
+        />
 
-      <BigSidebar
-        sidebarDropped={sidebarDropped}
-        toggleSidebar={toggleSidebar}
-        toggleForm={toggleForm}
-        formOpen={formOpen}
-      />
-      {cartCount > 0 && <CheckoutRow pathname={pathname} />}
-    </nav>
+        <BigSidebar
+          sidebarDropped={sidebarDropped}
+          toggleSidebar={toggleSidebar}
+          toggleForm={toggleForm}
+          formOpen={formOpen}
+        />
+        {cartCount > 0 && <CheckoutRow pathname={pathname} />}
+      </nav>
+    </>
   );
 }

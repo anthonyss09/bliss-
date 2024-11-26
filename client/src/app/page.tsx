@@ -44,7 +44,7 @@ export default function Home() {
           />
         </div>
         <Link href="/products/all-products">
-          <div className="h-12 text-[15px] font-semibold text-[#190B72] tracking-wide grid place-items-center border-2 border-[#190B72] w-[192px] absolute left-1/2 top-[180px] sm:top-1/2 translate-x-[-50%] translate-y-[-50%] bg-white/70 shadow-lg hover:bg-black hover:text-white">
+          <div className="h-12 w-[192px] text-[15px] text-[#190b72] font-medium bg-[#ebdafb90] tracking-wide grid place-items-center border-[#190b7210] border-2  absolute left-1/2 top-[125px] sm:top-1/2 translate-x-[-50%] translate-y-[-50%]  hover:bg-[#d1a7fc]  hover:border-0">
             Shop Collection
           </div>
         </Link>
@@ -135,7 +135,7 @@ export default function Home() {
             } py-4 sm:py-8 lg:mx-24  duration-500 ease-in-out`}
           >
             <Link href="/products/all-products">
-              <div className="h-12 w-32 border-2 bg-white border-blue-dark mx-auto grid place-items-center tracking-wide text-sm font-medium hover:bg-black hover:border-0 hover:text-white">
+              <div className="h-12 w-40 border-2 bg-white border-blue-dark mx-auto grid place-items-center tracking-wide text-sm font-medium hover:bg-black hover:border-0 hover:text-white">
                 Shop Collection
               </div>
             </Link>

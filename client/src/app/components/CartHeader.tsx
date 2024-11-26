@@ -50,7 +50,7 @@ export default function CartHeader({ subTotal, total, tax, cartCount }: props) {
             ${Number(total).toFixed(0)}
           </p>
         </div>
-        <button className="h-12 w-full bg-[#bed3fb] hover:bg-[#2b9df0] hover:text-white font-semibold tracking-wide">
+        <button className="h-12 w-full bg-[#2b9df090] hover:bg-[#2b9df0] hover:text-white font-semibold tracking-wide">
           Checkout
         </button>
       </div>

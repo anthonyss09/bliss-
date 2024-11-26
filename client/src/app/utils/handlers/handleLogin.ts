@@ -46,14 +46,18 @@ export default async function handleLogin({
       console.log(error);
     }
   } else {
-    const response = await createCustomerToken({
-      email: email,
-      password: password,
-    });
-    const token =
-      response.data.customerAccessTokenCreate.customerAccessToken.accessToken;
-    const shopifyData = await getShopifyCustomer(token);
-    const redisCustomer: any = await getRedisCustomer(shopifyData.customer.id);
-    dispatch(setCartId(redisCustomer.cartId));
+    try {
+      const response = await createCustomerToken({
+        email: email,
+        password: password,
+      });
+      const token =
+        response.data.customerAccessTokenCreate.customerAccessToken.accessToken;
+      const shopifyData = await getShopifyCustomer(token);
+      const redisCustomer: any = await getRedisCustomer(
+        shopifyData.customer.id
+      );
+      dispatch(setCartId(redisCustomer.cartId));
+    } catch (error) {}
   }
 }
