@@ -68,7 +68,15 @@ const extendedApi = apiSlice.injectEndpoints({
         `,
       }),
       async onQueryStarted(
-        { cartId, lines },
+        {
+          cartId,
+          productTitle,
+          variantTitle,
+          featuredImageUrl,
+          merchandiseId,
+          attributes,
+          quantity,
+        },
         { dispatch, getState, queryFulfilled }
       ) {
         try {
@@ -82,7 +90,7 @@ const extendedApi = apiSlice.injectEndpoints({
           setTimeout(() => {
             dispatch(clearAlert({}));
           }, 2000);
-        } catch (error) {
+        } catch (error: any) {
           const errorMessage = error.error
             ? error.error.message.slice(0, 18)
             : error.message;
@@ -100,6 +108,7 @@ const extendedApi = apiSlice.injectEndpoints({
       },
       invalidatesTags: ["Cart", "Customer"],
     }),
+
     createCart: build.mutation({
       query: ({
         merchandiseId,
@@ -200,7 +209,7 @@ const extendedApi = apiSlice.injectEndpoints({
             }
           cost {
               totalAmount {
-                amount
+                amount 
                 currencyCode
               }
               subtotalAmount {
@@ -242,6 +251,72 @@ const extendedApi = apiSlice.injectEndpoints({
       },
       providesTags: ["Cart"],
     }),
+
+    updateCartLine: build.mutation({
+      query: ({
+        cartId,
+        productTitle,
+        variantTitle,
+        featuredImageUrl,
+        lineId,
+        merchandiseId,
+        attributes,
+        quantity,
+        message,
+      }) => ({
+        document: gql`
+          mutation {
+            cartLinesUpdate(cartId: "${cartId}", lines: {id: "${lineId}" merchandiseId: "${merchandiseId}" quantity: ${quantity} attributes: [{key: "title" value: "${productTitle}"},{key: "variantTitle" value: "${variantTitle}"}, {key: "featuredImageUrl" value: "${featuredImageUrl}"} ]}) {
+              cart {
+                id
+              }
+            }
+          }
+        `,
+      }),
+      async onQueryStarted(
+        {
+          cartId,
+          productTitle,
+          variantTitle,
+          featuredImageUrl,
+          merchandiseId,
+          attributes,
+          quantity,
+          message,
+        },
+        { dispatch, getState, queryFulfilled }
+      ) {
+        try {
+          const { data: cartData } = await queryFulfilled;
+          console.log(cartData);
+          dispatch(
+            showAlert({
+              alertMessage: message,
+              alertType: "success",
+            })
+          );
+          setTimeout(() => {
+            dispatch(clearAlert({}));
+          }, 2000);
+        } catch (error: any) {
+          const errorMessage = error.error
+            ? error.error.message.slice(0, 18)
+            : error.message;
+          dispatch(
+            showAlert({
+              alertMessage: errorMessage,
+              alertType: "danger",
+            })
+          );
+          setTimeout(() => {
+            dispatch(clearAlert({}));
+          }, 2000);
+          console.log("some error occured adding cart line.", error);
+        }
+      },
+      invalidatesTags: ["Cart", "Customer"],
+    }),
   }),
 });
 
@@ -275,4 +350,5 @@ export const {
   useCreateCartMutation,
   useGetCartQuery,
   useAddCartLineMutation,
+  useUpdateCartLineMutation,
 } = extendedApi;

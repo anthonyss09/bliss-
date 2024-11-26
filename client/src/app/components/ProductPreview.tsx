@@ -5,11 +5,13 @@ import { usePathname } from "next/navigation";
 import {
   useCreateCartMutation,
   useAddCartLineMutation,
+  useUpdateCartLineMutation,
   selectCartData,
 } from "../../lib/features/cart/cartSlice";
 import { useAppSelector, useAppDispatch } from "../../lib/hooks";
 import { showAlert, clearAlert } from "../../lib/features/alerts/alertsSlice";
 import addCartItem from "../utils/helpers/addCartItem";
+import removeCartItem from "../utils/helpers/removeCartItem";
 
 interface props {
   id: string;
@@ -40,9 +42,9 @@ export default function ProductPreview({
   }
 
   const pathname = usePathname();
-  const dispatch = useAppDispatch();
   const [createCart] = useCreateCartMutation();
   const [addCartLine] = useAddCartLineMutation();
+  const [updateCartLine] = useUpdateCartLineMutation();
   const { cartData, cartId } = useAppSelector(selectCartData);
   const {
     cart: {
@@ -56,9 +58,9 @@ export default function ProductPreview({
         <button
           onClick={() => {
             addCartItem({
-              dispatch,
               createCart,
               addCartLine,
+              updateCartLine,
               cartId,
               cartEdges,
               merchandiseId,
@@ -104,21 +106,36 @@ export default function ProductPreview({
             {profile}
           </p>
           <p className={`font-light text-sm mb-2`}>{productType}</p>
-          <p className={`font-medium text-sm mb-4`}>${price}</p>{" "}
+          <p className={`font-medium text-sm mb-4`}>
+            ${Number(price).toFixed(0)}
+          </p>{" "}
         </div>
       </Link>
       {pathname === "/cart" && (
         <div className="flex items-center justify-center gap-4">
-          <button className="h-[28px] w-[28px] font-semibold bg-[#00000010] hover:bg-black/50 hover:text-white">
+          <button
+            onClick={() => {
+              removeCartItem({
+                updateCartLine,
+                cartId,
+                cartEdges,
+                merchandiseId,
+                variantTitle: title,
+                productTitle: title,
+                featuredImageUrl,
+              });
+            }}
+            className="h-[28px] w-[28px] font-semibold bg-[#00000010] hover:bg-black/50 hover:text-white"
+          >
             -
           </button>
           <p className="text-sm font-bold">{quantity}</p>
           <button
             onClick={() => {
               addCartItem({
-                dispatch,
                 createCart,
                 addCartLine,
+                updateCartLine,
                 cartId,
                 cartEdges,
                 merchandiseId,

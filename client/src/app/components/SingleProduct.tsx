@@ -3,9 +3,9 @@ import {
   useCreateCartMutation,
   selectCartData,
   useAddCartLineMutation,
+  useUpdateCartLineMutation,
 } from "../../lib/features/cart/cartSlice";
 import { useAppSelector, useAppDispatch } from "../../lib/hooks";
-import { showAlert, clearAlert } from "../../lib/features/alerts/alertsSlice";
 import addCartItem from "../utils/helpers/addCartItem";
 
 interface props {
@@ -27,8 +27,10 @@ interface props {
 }
 
 export default function SingleProduct({ product }: props) {
+  console.log("the props", product);
   const [createCart] = useCreateCartMutation();
   const [addCartLine] = useAddCartLineMutation();
+  const [updateCartLine] = useUpdateCartLineMutation();
   const { cartData, cartId } = useAppSelector(selectCartData);
   const {
     cart: {
@@ -37,28 +39,6 @@ export default function SingleProduct({ product }: props) {
   } = cartData;
   const dispatch = useAppDispatch();
 
-  // async function addCartItem() {
-  //   if (cartId === "gid://shopify/Cart/null") {
-  //     const cart = await createCart({
-  //       merchandiseId: product.variants.nodes[0].id,
-  //       productTitle: product.title,
-  //       variantTitle: product.title,
-  //       featuredImageUrl: product.featuredImage.url,
-  //     }).then(() => {
-  //       dispatch(
-  //         showAlert({
-  //           alertMessage: "Item added to cart!",
-  //           alertType: "success",
-  //         })
-  //       );
-  //     });
-  //   } else {
-  //   }
-  //   setTimeout(() => {
-  //     dispatch(clearAlert(null));
-  //   }, 3000);
-  //   return;
-  // }
   return (
     <aside className={`sm:flex sm:items-center sm:gap-12 `}>
       <div className={`w-[300px] h-[300px] relative`}>
@@ -84,9 +64,9 @@ export default function SingleProduct({ product }: props) {
         <button
           onClick={() => {
             addCartItem({
-              dispatch,
               createCart,
               addCartLine,
+              updateCartLine,
               cartId,
               cartEdges,
               merchandiseId: product.variants.nodes[0].id,

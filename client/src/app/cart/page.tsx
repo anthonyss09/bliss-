@@ -72,7 +72,7 @@ export default function CartPage() {
           <p className="mb-4 text-sm font-medium text-black/70  tracking-wide duration-100 sm:text-base">
             Items
           </p>
-          <div className="min-h-[300px] flex flex-wrap justify-around gap-12 mb-8 py-4 border-b-2 border-t-2 border-[#00000005] md:py-4 md:border-b-[3px] md:border-t-[3px] md:h-[515px] md:overflow-scroll">
+          <div className="min-h-[300px] flex flex-wrap justify-around gap-12 mb-8 py-4 border-b-2 border-t-2 border-[#00000010] md:py-4 md:border-b-[3px] md:border-t-[3px] md:h-[515px] md:overflow-scroll">
             {content}
           </div>
         </section>

@@ -1,19 +1,13 @@
-import { AppDispatch } from "../../../lib/store";
-import {
-  clearAlert,
-  showAlert,
-} from "../../../lib/features/alerts/alertsSlice";
-
 interface args {
   cartId: string;
   merchandiseId: string;
   productTitle: string;
   variantTitle: string;
   featuredImageUrl: string;
-  cartEdges: Array;
-  dispatch: AppDispatch;
-  createCart: () => any;
-  addCartLine: () => any;
+  cartEdges: Array<any>;
+  createCart: (obj: any) => any;
+  addCartLine: (obj: any) => any;
+  updateCartLine: (obj: any) => any;
 }
 
 export default async function addCartItem({
@@ -23,9 +17,9 @@ export default async function addCartItem({
   productTitle,
   variantTitle,
   featuredImageUrl,
-  dispatch,
   createCart,
   addCartLine,
+  updateCartLine,
 }: args) {
   if (cartId === "gid://shopify/Cart/null") {
     const cart = await createCart({
@@ -36,16 +30,28 @@ export default async function addCartItem({
     });
   } else {
     let lineId = null;
+    let currentQuantity = 0;
     cartEdges.map((edge) => {
       if (edge.node.merchandise.id === merchandiseId) {
         lineId = edge.node.id;
+        currentQuantity = edge.node.quantity;
       }
     });
     if (lineId) {
       console.log("update line");
+      updateCartLine({
+        cartId,
+        lineId,
+        productTitle,
+        variantTitle,
+        featuredImageUrl,
+        merchandiseId,
+        quantity: currentQuantity + 1,
+        message: "Item added to cart!",
+      });
     } else {
       console.log("add line");
-      addCartLine({
+      const res = await addCartLine({
         cartId,
         productTitle,
         variantTitle,
@@ -53,6 +59,7 @@ export default async function addCartItem({
         merchandiseId,
         quantity: 1,
       });
+      console.log(res);
     }
   }
 

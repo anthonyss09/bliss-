@@ -24,7 +24,14 @@ export default function ({
     localStorage.removeItem("blissCartId");
     dispatch(logoutCustomer(null));
     dispatch(setCartId("gid://shopify/Cart/null"));
-    dispatch(setCartData(null));
+    dispatch(
+      setCartData({
+        cart: {
+          lines: { edges: [] },
+          cost: { totalAmount: { amount: 0 }, subtotalAmount: { amount: 0 } },
+        },
+      })
+    );
     dispatch(setCartCount(0));
   }
 

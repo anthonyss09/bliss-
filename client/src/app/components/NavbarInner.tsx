@@ -45,7 +45,7 @@ export default function NavbarInner({
       </button>
       <Logo toggleSidebar={toggleSidebar} />
       <Link href="/cart" className="relative">
-        <div className="absolute top-[-16px] left-4 font-semibold sm:hidden">
+        <div className="h-[20px] w-[20px] absolute top-[-16px] left-[12px] font-bold sm:hidden bg-[#ebdafb] text-xs grid place-items-center rounded-xl">
           {cartCount}
         </div>
         <Image
@@ -61,7 +61,7 @@ export default function NavbarInner({
 
         <NavLink name="Shop" path="/products/all-products" />
         <Link href="/cart" className="relative">
-          <div className="absolute top-[-13px] left-[12px] font-semibold text-sm">
+          <div className="h-[18px] w-[18px] absolute top-[-16px] left-[12px] font-semibold text-sm bg-[#ebdafb] text-xs grid place-items-center rounded-xl">
             {cartCount}
           </div>
           <Image
