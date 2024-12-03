@@ -1,11 +1,20 @@
+import Link from "next/link";
+
 interface Props {
   cartCount: number;
+  checkoutUrl: string;
   subTotal: number;
   total: number;
   tax: number;
 }
 
-export default function CartHeader({ subTotal, total, tax, cartCount }: Props) {
+export default function CartHeader({
+  subTotal,
+  total,
+  tax,
+  cartCount,
+  checkoutUrl,
+}: Props) {
   return (
     <header
       id="cart-header"
@@ -50,9 +59,13 @@ export default function CartHeader({ subTotal, total, tax, cartCount }: Props) {
             ${Number(total).toFixed(0)}
           </p>
         </div>
-        <button className="h-12 w-full bg-[#2b9df090] hover:bg-[#2b9df0] hover:text-white font-semibold tracking-wide">
+        <Link
+          href={checkoutUrl}
+          className="h-12 w-full bg-[#2b9df090] hover:bg-[#2b9df0] hover:text-white font-semibold tracking-wide text-center
+          grid items-center"
+        >
           Checkout
-        </button>
+        </Link>
       </div>
     </header>
   );

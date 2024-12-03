@@ -10,7 +10,9 @@ import { CartItem } from "../../lib/features/cart/types";
 
 export default function CartPage() {
   const { cartData, cartCount, cartLoading } = useAppSelector(selectCartData);
-
+  const {
+    cart: { checkoutUrl },
+  } = cartData;
   let items;
   let content;
   let subTotal = 0;
@@ -66,6 +68,7 @@ export default function CartPage() {
           tax={tax}
           subTotal={subTotal}
           total={total}
+          checkoutUrl={checkoutUrl}
         />
       )}
       <main>

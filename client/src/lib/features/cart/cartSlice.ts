@@ -38,6 +38,7 @@ const initialState = {
   cartId,
   cartData: {
     cart: {
+      checkoutUrl: "",
       lines: { edges: [] },
       cost: { totalAmount: { amount: 0 }, subtotalAmount: { amount: 0 } },
     },
