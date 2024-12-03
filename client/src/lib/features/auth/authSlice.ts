@@ -66,7 +66,7 @@ export const extendedApi = apiSlice.injectEndpoints({
           }
         `,
       }),
-      invalidatesTags: ["Customer"],
+      invalidatesTags: ["Customer", "Cart"],
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const response = await queryFulfilled;
