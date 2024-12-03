@@ -72,7 +72,7 @@ export default function SingleProduct({ product }: Props) {
         </p>
         <p className={`font-light text-sm mb-2`}>{product.productType}</p>
         <p className={`font-medium text-base mb-4`}>
-          ${product.priceRange.maxVariantPrice.amount}
+          ${Number(product.priceRange.maxVariantPrice.amount).toFixed(0)}
         </p>
         <p className="mb-4 text-sm">{product.description}</p>
         <button
