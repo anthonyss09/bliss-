@@ -24,6 +24,8 @@ export default function Carousel() {
               profile="Basil + Kiwi + Coriander"
               id="1"
               featuredImageUrl="https://cdn.shopify.com/s/files/1/0623/2168/8645/files/bottlesDouble.jpg?v=1730221070"
+              merchandiseId="111"
+              quantity={1}
             />
           </div>
         );
@@ -35,7 +37,7 @@ export default function Carousel() {
     if (position === 0) {
       return;
     }
-    var distance = "-" + ((position - 1) * 100).toString() + "vw";
+    const distance = "-" + ((position - 1) * 100).toString() + "vw";
     const el = document.getElementById("slider");
     if (el) {
       el.style.transform = `translateX(${distance})`;
@@ -47,7 +49,7 @@ export default function Carousel() {
     if ((windowWidthRef.current > 768 && position === 1) || position === 3) {
       return;
     }
-    let distance = "-" + ((position + 1) * 100).toString() + "vw";
+    const distance = "-" + ((position + 1) * 100).toString() + "vw";
     const el = document.getElementById("slider");
     if (el) {
       el.style.transform = `translateX(${distance})`;

@@ -12,7 +12,7 @@ export default function CheckoutRow({ pathname }: { pathname: string }) {
       },
     },
   } = useAppSelector(selectCartData);
-  function handleScroll(e: any) {
+  function handleScroll() {
     const checkoutRow = document.getElementById("checkout-row");
     if (typeof window !== "undefined") {
       if (checkoutRow) {

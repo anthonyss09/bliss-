@@ -1,14 +1,34 @@
-export interface createTokenArgs {
+export interface CreateTokenArgs {
   email: string;
   password: string;
 }
 
-export interface loginCustomerArgs {
+export interface CreateTokenResponse {
+  customerAccessTokenCreate: {
+    customerAccessToken: { accessToken: string };
+    customerUserErrors: Array<{ message: string }>;
+  };
+}
+
+export interface LoginCustomerArgs {
   customerAccessToken: string;
 }
 
-export interface registerCustomerArgs {
+export interface RegisterCustomerArgs {
   firstName: string;
   email: string;
   password: string;
+}
+
+export interface RegisterCustomerResponse {
+  customerCreate: {
+    customer: {
+      id: string;
+      firstName: string;
+      lastName: string;
+      email: string;
+    };
+    customerUserErrors: Array<{ message: string }>;
+  };
+  customerUserErrors: [{ message: string }, { message: string }];
 }

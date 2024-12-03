@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../store";
 
 interface AlertsState {
@@ -23,7 +22,7 @@ const alertsSlice = createSlice({
       state.alertMessage = action.payload.alertMessage;
       state.alertType = action.payload.alertType;
     },
-    clearAlert(state, action) {
+    clearAlert(state) {
       state.showAlert = false;
       state.alertMessage = "";
       state.alertType = "";

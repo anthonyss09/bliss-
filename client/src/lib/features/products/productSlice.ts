@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { RootState } from "../../store";
 import { apiSlice } from "../api/apiSlice";
 import { gql } from "graphql-request";
 import { getProductsArgs } from "./types";

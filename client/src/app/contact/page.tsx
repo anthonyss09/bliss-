@@ -15,7 +15,11 @@ export default function Contact() {
 
   const dispatch = useAppDispatch();
 
-  function handleInputChange(e: any) {
+  function handleInputChange(
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ) {
     const { id, value } = e.target;
     if (id === "email-contact") {
       setEmail(value);
@@ -27,7 +31,7 @@ export default function Contact() {
     }
   }
 
-  async function handleSubmit(e: any) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setIsLoading(true);
     await handleContactMessage({ email, message })
@@ -38,7 +42,7 @@ export default function Contact() {
         setTimeout(() => {
           setEmail("");
           setMessage("");
-          dispatch(clearAlert(null));
+          dispatch(clearAlert());
         }, 3000);
       })
       .catch((error) => {
@@ -46,7 +50,7 @@ export default function Contact() {
           showAlert({ alertMessage: error.message, alertType: "danger" })
         );
         setTimeout(() => {
-          dispatch(clearAlert(null));
+          dispatch(clearAlert());
         }, 3000);
       });
     setIsLoading(false);
@@ -68,7 +72,7 @@ export default function Contact() {
         </p>
 
         <h3 className="text-xl mb-4">
-          We're looking forward to hearing from you.
+          We are looking forward to hearing from you.
         </h3>
         <div className="h-12 w-full bg-[#00000010] mb-12 rounded-[48px]">
           {" "}

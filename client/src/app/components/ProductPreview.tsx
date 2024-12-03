@@ -8,12 +8,16 @@ import {
   useUpdateCartLineMutation,
   selectCartData,
 } from "../../lib/features/cart/cartSlice";
-import { useAppSelector, useAppDispatch } from "../../lib/hooks";
-import { showAlert, clearAlert } from "../../lib/features/alerts/alertsSlice";
+import { useAppSelector } from "../../lib/hooks";
 import addCartItem from "../utils/helpers/addCartItem";
 import removeCartItem from "../utils/helpers/removeCartItem";
+import {
+  CreateCartArgs,
+  AddCartLineArgs,
+  UpdateCartLineArgs,
+} from "../../lib/features/cart/types";
 
-interface props {
+interface Props {
   id: string;
   size: string;
   title: string;
@@ -35,8 +39,8 @@ export default function ProductPreview({
   merchandiseId,
   featuredImageUrl,
   quantity,
-}: props) {
-  var fit = true;
+}: Props) {
+  let fit = true;
   if (size != "fit") {
     fit = false;
   }
@@ -45,6 +49,15 @@ export default function ProductPreview({
   const [createCart] = useCreateCartMutation();
   const [addCartLine] = useAddCartLineMutation();
   const [updateCartLine] = useUpdateCartLineMutation();
+  async function handleCreateCart(args: CreateCartArgs) {
+    await createCart(args);
+  }
+  async function handleAddCartLine(args: AddCartLineArgs) {
+    await addCartLine(args);
+  }
+  async function handleUpdateCartLine(args: UpdateCartLineArgs) {
+    await updateCartLine(args);
+  }
   const { cartData, cartId } = useAppSelector(selectCartData);
   const {
     cart: {
@@ -58,9 +71,9 @@ export default function ProductPreview({
         <button
           onClick={() => {
             addCartItem({
-              createCart,
-              addCartLine,
-              updateCartLine,
+              createCart: handleCreateCart,
+              addCartLine: handleAddCartLine,
+              updateCartLine: handleUpdateCartLine,
               cartId,
               cartEdges,
               merchandiseId,
@@ -116,7 +129,7 @@ export default function ProductPreview({
           <button
             onClick={() => {
               removeCartItem({
-                updateCartLine,
+                updateCartLine: handleUpdateCartLine,
                 cartId,
                 cartEdges,
                 merchandiseId,

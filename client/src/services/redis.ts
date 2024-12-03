@@ -36,7 +36,7 @@ export async function getRedisCustomer(
   });
 
   try {
-    var redisData: RedisObject | null = await redis.get(customerId);
+    const redisData: RedisObject | null = await redis.get(customerId);
     return redisData;
   } catch (error) {
     console.log("error fetching redis data", error);

@@ -1,11 +1,11 @@
-interface props {
+interface Props {
   cartCount: number;
   subTotal: number;
   total: number;
   tax: number;
 }
 
-export default function CartHeader({ subTotal, total, tax, cartCount }: props) {
+export default function CartHeader({ subTotal, total, tax, cartCount }: Props) {
   return (
     <header
       id="cart-header"

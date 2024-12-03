@@ -1,11 +1,13 @@
+import { CartItem, UpdateCartLineArgs } from "../../../lib/features/cart/types";
+
 interface args {
   cartId: string;
   merchandiseId: string;
   productTitle: string;
   variantTitle: string;
   featuredImageUrl: string;
-  cartEdges: Array<any>;
-  updateCartLine: (obj: any) => any;
+  cartEdges: Array<CartItem>;
+  updateCartLine: (args: UpdateCartLineArgs) => void;
 }
 
 export default async function removeCartItem({

@@ -1,9 +1,9 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import * as nodemailer from "nodemailer";
 import { google } from "googleapis";
 const OAuth2 = google.auth.OAuth2;
 
-export async function POST(req: any) {
+export async function POST(req: NextRequest) {
   const formData = await req.formData();
 
   const email = formData.get("email");
@@ -44,8 +44,8 @@ export async function POST(req: any) {
       },
     } as nodemailer.TransportOptions);
 
-    const info = await transporter.sendMail({
-      from: email,
+    await transporter.sendMail({
+      from: JSON.stringify(email),
       to: process.env.EMAIL,
       subject: "test",
       text: message + "from: " + email,

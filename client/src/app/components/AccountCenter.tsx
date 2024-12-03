@@ -8,7 +8,7 @@ import {
   setCartCount,
 } from "../../lib/features/cart/cartSlice";
 
-export default function ({
+export default function AccountCenter({
   formOpen,
   toggleSidebar,
 }: {
@@ -22,7 +22,7 @@ export default function ({
   function handleLogout() {
     localStorage.removeItem("blissCustomerAccessToken");
     localStorage.removeItem("blissCartId");
-    dispatch(logoutCustomer(null));
+    dispatch(logoutCustomer());
     dispatch(setCartId("gid://shopify/Cart/null"));
     dispatch(
       setCartData({

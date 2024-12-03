@@ -17,11 +17,10 @@ const rootReducer = combineReducers({
   [apiSlice.reducerPath]: apiSlice.reducer,
 });
 
-export const makeStore = (preloadedState: any) => {
+export const makeStore = () => {
   return configureStore({
     reducer: rootReducer,
-    preloadedState,
-    middleware: (buildGetDefaultMiddleware: any) =>
+    middleware: (buildGetDefaultMiddleware) =>
       buildGetDefaultMiddleware()
         .concat(apiSlice.middleware)
         .concat(rtkQueryErrorLogger),

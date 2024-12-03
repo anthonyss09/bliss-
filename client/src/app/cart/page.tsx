@@ -6,6 +6,7 @@ import { useAppSelector } from "../../lib/hooks";
 import Spinner from "../components/Spinner";
 import CartHeader from "../components/CartHeader";
 import Link from "next/link";
+import { CartItem } from "../../lib/features/cart/types";
 
 export default function CartPage() {
   const { cartData, cartCount, cartLoading } = useAppSelector(selectCartData);
@@ -14,14 +15,14 @@ export default function CartPage() {
   let content;
   let subTotal = 0;
   let total = 0;
-  let tax = 0;
+  const tax = 0;
 
   if (cartLoading) {
     content = <Spinner />;
   } else if (cartData && cartCount) {
     items = cartData.cart.lines.edges;
     if (items.length) {
-      content = items.map((item: any) => {
+      content = items.map((item: CartItem) => {
         subTotal = cartData.cart.cost.subtotalAmount.amount;
         total = cartData.cart.cost.totalAmount.amount;
         subTotal = cartData.cart.cost.totalAmount.amount;

@@ -9,7 +9,7 @@ export default function TryAgain({
       <button
         className="h-12 w-28 border-2 border-black font-semibold hover:bg-black hover:text-white"
         onClick={() => {
-          const res = refetch({ force: true });
+          refetch({ force: true });
         }}
       >
         Try Again

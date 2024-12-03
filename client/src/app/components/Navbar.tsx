@@ -28,11 +28,11 @@ export default function Navbar() {
 
   const pathname = usePathname();
 
-  const { data: authenticationData } = useLoginCustomerQuery({
+  useLoginCustomerQuery({
     customerAccessToken: customerAccessToken,
   });
   const { cartId, cartCount } = useAppSelector(selectCartData);
-  const { data: cartData, isLoading, isSuccess } = useGetCartQuery(cartId);
+  useGetCartQuery(cartId);
 
   const yPosition = useRef(0);
   const windowWidth = useRef(0);
@@ -54,7 +54,7 @@ export default function Navbar() {
     }
   }
 
-  function handleScroll(e: any) {
+  function handleScroll() {
     if (sidebarDropped) {
       return;
     }
@@ -103,7 +103,7 @@ export default function Navbar() {
     setFormOpen(bool);
   }
 
-  function handleResize(e: any) {
+  function handleResize() {
     if (windowWidth.current < 660 && window.innerWidth > 660) {
       setSidebarDropped(false);
       toggleForm(false);
@@ -113,7 +113,7 @@ export default function Navbar() {
       windowWidth.current = window.innerWidth;
     }
   }
-  function handlePageClick(e: any) {
+  function handlePageClick() {
     toggleSidebar(false);
   }
 

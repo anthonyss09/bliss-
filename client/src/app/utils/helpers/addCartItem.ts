@@ -1,13 +1,20 @@
+import {
+  AddCartLineArgs,
+  CreateCartArgs,
+  UpdateCartLineArgs,
+  CartItem,
+} from "../../../lib/features/cart/types";
+
 interface args {
   cartId: string;
   merchandiseId: string;
   productTitle: string;
   variantTitle: string;
   featuredImageUrl: string;
-  cartEdges: Array<any>;
-  createCart: (obj: any) => any;
-  addCartLine: (obj: any) => any;
-  updateCartLine: (obj: any) => any;
+  cartEdges: Array<CartItem>;
+  createCart: (args: CreateCartArgs) => void;
+  addCartLine: (args: AddCartLineArgs) => void;
+  updateCartLine: (args: UpdateCartLineArgs) => void;
 }
 
 export default async function addCartItem({
@@ -22,7 +29,7 @@ export default async function addCartItem({
   updateCartLine,
 }: args) {
   if (cartId === "gid://shopify/Cart/null") {
-    const cart = await createCart({
+    createCart({
       merchandiseId,
       productTitle,
       variantTitle,
@@ -51,7 +58,7 @@ export default async function addCartItem({
       });
     } else {
       console.log("add line");
-      const res = await addCartLine({
+      addCartLine({
         cartId,
         productTitle,
         variantTitle,
@@ -59,7 +66,6 @@ export default async function addCartItem({
         merchandiseId,
         quantity: 1,
       });
-      console.log(res);
     }
   }
 

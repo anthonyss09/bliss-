@@ -1,14 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import FormRow from "./FormRow";
 import Image from "next/image";
 import {
   useRegisterCustomerMutation,
   useCreateCustomerTokenMutation,
 } from "../../lib/features/auth/authSlice";
-import handleLogin from "../utils/handlers/handleLogin";
 import { useAppDispatch } from "../../lib/hooks";
 import Spinner from "../components/Spinner";
 import { showAlert, clearAlert } from "../../lib/features/alerts/alertsSlice";
+import {
+  setRedisCustomer,
+  getRedisCustomer,
+  RedisObject,
+} from "../../services/redis";
+import getShopifyCustomer from "../../app/utils/helpers/getShopifyCustomer";
+import { setCartId } from "../../lib/features/cart/cartSlice";
 
 export default function LoginForm({
   formOpen,
@@ -26,8 +32,7 @@ export default function LoginForm({
   const dispatch = useAppDispatch();
 
   const [registerCustomer] = useRegisterCustomerMutation();
-  const [createCustomerToken, { error: tokenError }] =
-    useCreateCustomerTokenMutation();
+  const [createCustomerToken] = useCreateCustomerTokenMutation();
 
   function toggleLogin() {
     setIsLogin(!isLogin);
@@ -49,21 +54,68 @@ export default function LoginForm({
   async function handleSubmit(e: React.SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
     setIsLoading(true);
-
-    const response = await handleLogin({
-      createCustomerToken,
-      registerCustomer,
-      email: email,
-      password: password,
-      firstName: firstName,
-      isLogin,
-      dispatch,
-    }).catch((error) => {
-      dispatch(showAlert({ alertMessage: error.message, alertType: "danger" }));
+    if (!email || !password) {
+      dispatch(
+        showAlert({
+          alertMessage: "Please fill out all fields.",
+          alertType: "danger",
+        })
+      );
       setTimeout(() => {
-        dispatch(clearAlert(null));
+        dispatch(clearAlert());
       }, 3000);
-    });
+      setIsLoading(false);
+      return;
+    }
+    if (!isLogin) {
+      try {
+        const response = await registerCustomer({
+          firstName,
+          email,
+          password,
+        });
+        if (response.error) {
+          setIsLoading(false);
+          return;
+        }
+        const customerId = response?.data?.customerCreate.customer.id;
+        await createCustomerToken({
+          email: email,
+          password: password,
+        });
+        if (customerId) {
+          await setRedisCustomer({
+            customerId,
+            cartId: "gid://shopify/Cart/null",
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      try {
+        const response = await createCustomerToken({
+          email: email,
+          password: password,
+        });
+        if (response.error) {
+          setIsLoading(false);
+          return;
+        }
+        const token =
+          response?.data?.customerAccessTokenCreate.customerAccessToken
+            .accessToken;
+        const shopifyData = await getShopifyCustomer(token);
+        const redisCustomer: RedisObject | null = await getRedisCustomer(
+          shopifyData.customer.id
+        );
+        if (redisCustomer) {
+          dispatch(setCartId(redisCustomer.cartId));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
     setIsLoading(false);
   }
 

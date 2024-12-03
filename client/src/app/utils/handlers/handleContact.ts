@@ -18,7 +18,7 @@ async function handleContactMessage({
   formData.append("message", message);
 
   try {
-    const response = await fetch("/api/v1/contact", {
+    await fetch("/api/v1/contact", {
       method: "POST",
       body: formData,
     }).then((res) => {
@@ -26,8 +26,12 @@ async function handleContactMessage({
         throw new Error(res.statusText);
       }
     });
-  } catch (error: any) {
-    throw new Error(error.message);
+  } catch (error) {
+    if (error instanceof TypeError) {
+      throw new Error(error.message);
+    } else {
+      console.error("An unknown error occurred:", error);
+    }
   }
 }
 

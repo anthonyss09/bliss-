@@ -5,10 +5,15 @@ import {
   useAddCartLineMutation,
   useUpdateCartLineMutation,
 } from "../../lib/features/cart/cartSlice";
-import { useAppSelector, useAppDispatch } from "../../lib/hooks";
+import { useAppSelector } from "../../lib/hooks";
 import addCartItem from "../utils/helpers/addCartItem";
+import {
+  CreateCartArgs,
+  AddCartLineArgs,
+  UpdateCartLineArgs,
+} from "../../lib/features/cart/types";
 
-interface props {
+interface Props {
   product: {
     tags: [string, string, string];
     title: string;
@@ -26,24 +31,33 @@ interface props {
   };
 }
 
-export default function SingleProduct({ product }: props) {
-  console.log("the props", product);
+export default function SingleProduct({ product }: Props) {
   const [createCart] = useCreateCartMutation();
   const [addCartLine] = useAddCartLineMutation();
   const [updateCartLine] = useUpdateCartLineMutation();
   const { cartData, cartId } = useAppSelector(selectCartData);
+  async function handleCreateCart(args: CreateCartArgs) {
+    await createCart(args);
+  }
+  async function handleAddCartLine(args: AddCartLineArgs) {
+    await addCartLine(args);
+  }
+  async function handleUpdateCartLine(args: UpdateCartLineArgs) {
+    await updateCartLine(args);
+  }
   const {
     cart: {
       lines: { edges: cartEdges },
     },
   } = cartData;
-  const dispatch = useAppDispatch();
+  console.log("the edges", cartEdges);
 
   return (
     <aside className={`sm:flex sm:items-center sm:gap-12 `}>
       <div className={`w-[300px] h-[300px] relative`}>
         {" "}
         <Image
+          priority={true}
           src={product.featuredImage.url}
           alt="bliss bottles"
           fill
@@ -64,9 +78,9 @@ export default function SingleProduct({ product }: props) {
         <button
           onClick={() => {
             addCartItem({
-              createCart,
-              addCartLine,
-              updateCartLine,
+              createCart: handleCreateCart,
+              addCartLine: handleAddCartLine,
+              updateCartLine: handleUpdateCartLine,
               cartId,
               cartEdges,
               merchandiseId: product.variants.nodes[0].id,

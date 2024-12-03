@@ -5,13 +5,14 @@ import getShopifyCustomer from "../../../app/utils/helpers/getShopifyCustomer";
 import type { RootState } from "../../store";
 import { gql } from "graphql-request";
 import { showAlert, clearAlert } from "../alerts/alertsSlice";
+import { AddCartLineArgs, AddCartLineResponse, CartItem } from "./types";
 
-var cartId;
-var customerAccessToken: string | null;
+let cartId;
+let customerAccessToken: string | null;
 
 async function getCustomerData() {
   const shopifyData = await getShopifyCustomer(customerAccessToken);
-  const redisCustomer: any = await getRedisCustomer(shopifyData.customer.id);
+  const redisCustomer = await getRedisCustomer(shopifyData.customer.id);
   cartId = redisCustomer?.cartId || null;
   localStorage.setItem("blissCartId", JSON.stringify(cartId));
   return cartId;
@@ -47,14 +48,13 @@ const initialState = {
 const extendedApi = apiSlice.injectEndpoints({
   overrideExisting: true,
   endpoints: (build) => ({
-    addCartLine: build.mutation({
+    addCartLine: build.mutation<AddCartLineResponse, AddCartLineArgs>({
       query: ({
         cartId,
         productTitle,
         variantTitle,
         featuredImageUrl,
         merchandiseId,
-        attributes,
         quantity,
       }) => ({
         document: gql`
@@ -67,20 +67,9 @@ const extendedApi = apiSlice.injectEndpoints({
           }
         `,
       }),
-      async onQueryStarted(
-        {
-          cartId,
-          productTitle,
-          variantTitle,
-          featuredImageUrl,
-          merchandiseId,
-          attributes,
-          quantity,
-        },
-        { dispatch, getState, queryFulfilled }
-      ) {
+      async onQueryStarted({}, { dispatch, queryFulfilled }) {
         try {
-          const { data: cartData } = await queryFulfilled;
+          await queryFulfilled;
           dispatch(
             showAlert({
               alertMessage: "Item added to cart!",
@@ -88,12 +77,22 @@ const extendedApi = apiSlice.injectEndpoints({
             })
           );
           setTimeout(() => {
-            dispatch(clearAlert({}));
+            dispatch(clearAlert());
           }, 2000);
-        } catch (error: any) {
-          const errorMessage = error.error
-            ? error.error.message.slice(0, 18)
-            : error.message;
+        } catch (error) {
+          let errorMessage;
+          if (error instanceof Error) {
+            errorMessage = error.message;
+          } else if (
+            typeof error === "object" &&
+            error !== null &&
+            "error" in error &&
+            typeof error.error === "object" &&
+            error.error !== null &&
+            "message" in error.error
+          ) {
+            errorMessage = error.error.message;
+          }
           dispatch(
             showAlert({
               alertMessage: errorMessage,
@@ -101,7 +100,7 @@ const extendedApi = apiSlice.injectEndpoints({
             })
           );
           setTimeout(() => {
-            dispatch(clearAlert({}));
+            dispatch(clearAlert());
           }, 2000);
           console.log("some error occured adding cart line.", error);
         }
@@ -133,10 +132,7 @@ const extendedApi = apiSlice.injectEndpoints({
           }
         `,
       }),
-      async onQueryStarted(
-        { merchId, productTitle, productImageUrl },
-        { dispatch, queryFulfilled, getState }
-      ) {
+      async onQueryStarted(args, { dispatch, queryFulfilled, getState }) {
         try {
           const { data: cartData } = await queryFulfilled;
           dispatch(
@@ -146,7 +142,7 @@ const extendedApi = apiSlice.injectEndpoints({
             })
           );
           setTimeout(() => {
-            dispatch(clearAlert({}));
+            dispatch(clearAlert());
           }, 2000);
           dispatch(setCartId(cartData.cartCreate?.cart?.id));
           const state = getState() as RootState;
@@ -163,10 +159,20 @@ const extendedApi = apiSlice.injectEndpoints({
               JSON.stringify(cartData.cartCreate.cart.id)
             );
           }
-        } catch (error: any) {
-          const errorMessage = error.error
-            ? error.error.message.slice(0, 18)
-            : error.message;
+        } catch (error) {
+          let errorMessage;
+          if (error instanceof Error) {
+            errorMessage = error.message;
+          } else if (
+            typeof error === "object" &&
+            error !== null &&
+            "error" in error &&
+            typeof error.error === "object" &&
+            error.error !== null &&
+            "message" in error.error
+          ) {
+            errorMessage = error.error.message;
+          }
           dispatch(
             showAlert({
               alertMessage: errorMessage,
@@ -174,7 +180,7 @@ const extendedApi = apiSlice.injectEndpoints({
             })
           );
           setTimeout(() => {
-            dispatch(clearAlert({}));
+            dispatch(clearAlert());
           }, 2000);
           console.log("some error occured creating cart", error);
         }
@@ -228,13 +234,13 @@ const extendedApi = apiSlice.injectEndpoints({
           }
         }`,
       }),
-      async onQueryStarted(id, { dispatch, queryFulfilled, getState }) {
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
         try {
           const { data: cartData } = await queryFulfilled;
           if (cartData.cart !== null) {
             console.log("Cart retrieved,", cartData);
             let cartCount = 0;
-            cartData.cart.lines.edges.map((item: any) => {
+            cartData.cart.lines.edges.map((item: CartItem) => {
               cartCount += item.node.quantity;
             });
             dispatch(setCartId(cartData.cart.id));
@@ -260,13 +266,12 @@ const extendedApi = apiSlice.injectEndpoints({
         featuredImageUrl,
         lineId,
         merchandiseId,
-        attributes,
         quantity,
         message,
       }) => ({
         document: gql`
           mutation {
-            cartLinesUpdate(cartId: "${cartId}", lines: {id: "${lineId}" merchandiseId: "${merchandiseId}" quantity: ${quantity} attributes: [{key: "title" value: "${productTitle}"},{key: "variantTitle" value: "${variantTitle}"}, {key: "featuredImageUrl" value: "${featuredImageUrl}"} ]}) {
+            cartLinesUpdate(cartId: "${cartId}", lines: {id: "${lineId}" merchandiseId: "${merchandiseId}" quantity: ${quantity} attributes: [{key: "title" value: "${productTitle}"},{key: "variantTitle" value: "${variantTitle}"}, {key: "featuredImageUrl" value: "${featuredImageUrl}"}, {key: "message" value: "${message}"} ]}) {
               cart {
                 id
               }
@@ -274,19 +279,7 @@ const extendedApi = apiSlice.injectEndpoints({
           }
         `,
       }),
-      async onQueryStarted(
-        {
-          cartId,
-          productTitle,
-          variantTitle,
-          featuredImageUrl,
-          merchandiseId,
-          attributes,
-          quantity,
-          message,
-        },
-        { dispatch, getState, queryFulfilled }
-      ) {
+      async onQueryStarted({ message }, { dispatch, queryFulfilled }) {
         try {
           const { data: cartData } = await queryFulfilled;
           console.log(cartData);
@@ -297,12 +290,22 @@ const extendedApi = apiSlice.injectEndpoints({
             })
           );
           setTimeout(() => {
-            dispatch(clearAlert({}));
+            dispatch(clearAlert());
           }, 2000);
-        } catch (error: any) {
-          const errorMessage = error.error
-            ? error.error.message.slice(0, 18)
-            : error.message;
+        } catch (error) {
+          let errorMessage;
+          if (error instanceof Error) {
+            errorMessage = error.message;
+          } else if (
+            typeof error === "object" &&
+            error !== null &&
+            "error" in error &&
+            typeof error.error === "object" &&
+            error.error !== null &&
+            "message" in error.error
+          ) {
+            errorMessage = error.error.message;
+          }
           dispatch(
             showAlert({
               alertMessage: errorMessage,
@@ -310,7 +313,7 @@ const extendedApi = apiSlice.injectEndpoints({
             })
           );
           setTimeout(() => {
-            dispatch(clearAlert({}));
+            dispatch(clearAlert());
           }, 2000);
           console.log("some error occured adding cart line.", error);
         }

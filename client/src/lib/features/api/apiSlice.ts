@@ -5,7 +5,7 @@ export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: graphqlRequestBaseQuery({
     url: `https://${process.env.NEXT_PUBLIC_SHOP_NAME}.myshopify.com/api/${process.env.NEXT_PUBLIC_VERSION}/graphql.json`,
-    prepareHeaders: (headers, { getState }) => {
+    prepareHeaders: (headers) => {
       headers.set("Accept", "application/json");
       headers.set("Content-Type", "application/json");
       headers.set(
@@ -19,5 +19,5 @@ export const apiSlice = createApi({
   }),
 
   tagTypes: ["Cart", "Customer"],
-  endpoints: (build) => ({}),
+  endpoints: () => ({}),
 });

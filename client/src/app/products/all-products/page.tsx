@@ -7,6 +7,7 @@ import { getProductsArgs } from "../../../lib/features/products/types";
 import Spinner from "../../components/Spinner";
 import TryAgain from "../../components/TryAgain";
 import Link from "next/link";
+import { productEdge } from "../types";
 
 export default function AllProducts() {
   const [productArgs, setProductArgs] = useState<getProductsArgs>({
@@ -22,7 +23,7 @@ export default function AllProducts() {
   const { data, isSuccess, isLoading, refetch } =
     useGetProductsQuery(productArgs);
 
-  const { pageInfo, edges: products } = isSuccess
+  const { pageInfo, edges: productEdges } = isSuccess
     ? data.products
     : { pageInfo: null };
 
@@ -31,8 +32,8 @@ export default function AllProducts() {
     : { hasNextPage: null, hasPreviousPage: null };
 
   if (isSuccess) {
-    afterRef.current = products[products.length - 1].cursor;
-    beforeRef.current = products[0].cursor;
+    afterRef.current = productEdges[productEdges.length - 1].cursor;
+    beforeRef.current = productEdges[0].cursor;
   }
 
   function getNextProducts() {
@@ -65,16 +66,15 @@ export default function AllProducts() {
       </div>
     );
   } else if (isSuccess) {
-    content = products.map((product: any) => {
+    content = productEdges.map((edge: productEdge) => {
       const { title, tags, productType, id, featuredImage, variants } =
-        product.node;
-      console.log("product", product.node);
+        edge.node;
       const profile = `${tags[0]} + ${tags[1]} + ${tags[2]}`;
-      const price = product.node.priceRange.maxVariantPrice.amount;
+      const price = edge.node.priceRange.maxVariantPrice.amount;
       return (
         <ProductPreview
           size=""
-          key={product.node.id}
+          key={edge.node.id}
           title={title}
           profile={profile}
           price={price}

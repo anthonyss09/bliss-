@@ -2,9 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../../store";
 import { apiSlice } from "../api/apiSlice";
 import {
-  createTokenArgs,
-  registerCustomerArgs,
-  loginCustomerArgs,
+  CreateTokenArgs,
+  RegisterCustomerArgs,
+  LoginCustomerArgs,
+  CreateTokenResponse,
+  RegisterCustomerResponse,
 } from "./types";
 import getShopifyCustomer from "../../../app/utils/helpers/getShopifyCustomer";
 import { showAlert, clearAlert } from "../alerts/alertsSlice";
@@ -39,7 +41,7 @@ const authSlice = createSlice({
     setCustomerData(state, action) {
       state.customer = action.payload;
     },
-    logoutCustomer(state, action) {
+    logoutCustomer(state) {
       state.customer = { firstName: "", id: null };
       state.customerAccessToken = null;
     },
@@ -47,9 +49,9 @@ const authSlice = createSlice({
 });
 
 export const extendedApi = apiSlice.injectEndpoints({
-  endpoints: (build: any) => ({
-    createCustomerToken: build.mutation({
-      query: (arg: createTokenArgs) => ({
+  endpoints: (build) => ({
+    createCustomerToken: build.mutation<CreateTokenResponse, CreateTokenArgs>({
+      query: (arg: CreateTokenArgs) => ({
         document: gql`
           mutation {
             customerAccessTokenCreate(input: {email: "${arg.email}", password: "${arg.password}"})
@@ -65,9 +67,9 @@ export const extendedApi = apiSlice.injectEndpoints({
         `,
       }),
       invalidatesTags: ["Customer"],
-      async onQueryStarted(arg: any, lifecycleApi: any) {
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
-          const response = await lifecycleApi.queryFulfilled;
+          const response = await queryFulfilled;
           if (
             response.data.customerAccessTokenCreate.customerUserErrors &&
             response.data.customerAccessTokenCreate.customerUserErrors.length
@@ -79,27 +81,36 @@ export const extendedApi = apiSlice.injectEndpoints({
           const cat =
             response.data.customerAccessTokenCreate.customerAccessToken;
           if (cat !== null) {
-            lifecycleApi.dispatch(setCustomerAccessToken(cat.accessToken));
+            dispatch(setCustomerAccessToken(cat.accessToken));
             localStorage.setItem(
               "blissCustomerAccessToken",
               JSON.stringify(cat.accessToken)
             );
             const customerData = await getShopifyCustomer(cat.accessToken);
-            lifecycleApi.dispatch(setCustomerData(customerData.customer));
+            dispatch(setCustomerData(customerData.customer));
           }
-        } catch (error: any) {
-          console.log(error.message);
-          const errorMessage = error.error
-            ? error.error.message.slice(0, 18)
-            : error.message;
-          lifecycleApi.dispatch(
+        } catch (error) {
+          let errorMessage;
+          if (error instanceof Error) {
+            errorMessage = error.message;
+          } else if (
+            typeof error === "object" &&
+            error !== null &&
+            "error" in error &&
+            typeof error.error === "object" &&
+            error.error !== null &&
+            "message" in error.error
+          ) {
+            errorMessage = error.error.message;
+          }
+          dispatch(
             showAlert({
               alertMessage: errorMessage,
               alertType: "danger",
             })
           );
           setTimeout(() => {
-            lifecycleApi.dispatch(clearAlert({}));
+            dispatch(clearAlert());
           }, 2000);
           console.log("some error occured creating access token", error);
         }
@@ -107,7 +118,7 @@ export const extendedApi = apiSlice.injectEndpoints({
     }),
 
     loginCustomer: build.query({
-      query: (arg: loginCustomerArgs) => ({
+      query: (arg: LoginCustomerArgs) => ({
         document: gql`
           query {
             customer(customerAccessToken: "${arg.customerAccessToken}") {
@@ -122,14 +133,14 @@ export const extendedApi = apiSlice.injectEndpoints({
         `,
       }),
       providesTags: ["Customer"],
-      async onQueryStarted(arg: any, lifecycleApi: any) {
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
-          const { data: authData } = await lifecycleApi.queryFulfilled;
+          const { data: authData } = await queryFulfilled;
           if (authData.customer !== null) {
-            lifecycleApi.dispatch(setCustomerData(authData.customer));
+            dispatch(setCustomerData(authData.customer));
             const redisCustomer = await getRedisCustomer(authData.customer.id);
             if (redisCustomer !== null) {
-              lifecycleApi.dispatch(setCartId(redisCustomer.cartId));
+              dispatch(setCartId(redisCustomer.cartId));
             }
             if (localStorage.getItem("blissCartId")) {
               localStorage.removeItem("blissCartId");
@@ -142,8 +153,11 @@ export const extendedApi = apiSlice.injectEndpoints({
       },
     }),
 
-    registerCustomer: build.mutation({
-      query: (arg: registerCustomerArgs) => ({
+    registerCustomer: build.mutation<
+      RegisterCustomerResponse,
+      RegisterCustomerArgs
+    >({
+      query: (arg) => ({
         document: gql`
           mutation customerCreate {
             customerCreate(input: {firstName: "${arg.firstName}", email: "${arg.email}", password:"${arg.password}"})
@@ -163,9 +177,10 @@ export const extendedApi = apiSlice.injectEndpoints({
         `,
       }),
       invalidatesTags: ["Customer", "Cart"],
-      async onQueryStarted(arg: any, lifecycleApi: any) {
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
-          const response = await lifecycleApi.queryFulfilled;
+          const response = await queryFulfilled;
+          console.log("the response,", response);
           if (
             response.data.customerCreate.customerUserErrors &&
             response.data.customerCreate.customerUserErrors.length
@@ -174,25 +189,35 @@ export const extendedApi = apiSlice.injectEndpoints({
               response.data.customerCreate.customerUserErrors[0].message
             );
           }
-          if (response.customer !== null) {
-            lifecycleApi.dispatch(
-              setCustomerData(response.data.customerCreate.customer)
-            );
+          if (response.data.customerCreate.customer !== null) {
+            dispatch(setCustomerData(response.data.customerCreate.customer));
           }
-        } catch (error: any) {
-          const errorMessage = error.error
-            ? error.error.message
-            : error.message;
-          lifecycleApi.dispatch(
+        } catch (error) {
+          let errorMessage;
+          if (error instanceof Error) {
+            errorMessage = error.message;
+          } else if (
+            typeof error === "object" &&
+            error !== null &&
+            "error" in error &&
+            typeof error.error === "object" &&
+            error.error !== null &&
+            "message" in error.error
+          ) {
+            errorMessage = error.error.message;
+          }
+
+          dispatch(
             showAlert({
               alertMessage: errorMessage,
               alertType: "danger",
             })
           );
           setTimeout(() => {
-            lifecycleApi.dispatch(clearAlert({}));
+            dispatch(clearAlert());
           }, 2000);
           console.log("some error occured registering customer.", error);
+          return;
         }
       },
     }),

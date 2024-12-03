@@ -7,8 +7,8 @@ export default function BsMainItem({
   path,
   toggleSidebar,
 }: {
-  name: String;
-  path: String;
+  name: string;
+  path: string;
   toggleSidebar: (bool: boolean) => void;
 }) {
   const pathname = usePathname();
