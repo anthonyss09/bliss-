@@ -238,7 +238,6 @@ const extendedApi = apiSlice.injectEndpoints({
         try {
           const { data: cartData } = await queryFulfilled;
           if (cartData.cart !== null) {
-            console.log("Cart retrieved,", cartData);
             let cartCount = 0;
             cartData.cart.lines.edges.map((item: CartItem) => {
               cartCount += item.node.quantity;
@@ -246,8 +245,6 @@ const extendedApi = apiSlice.injectEndpoints({
             dispatch(setCartId(cartData.cart.id));
             dispatch(setCartCount(cartCount));
             dispatch(setCartData(cartData));
-          } else {
-            console.log("null data,", cartData);
           }
           dispatch(setCartLoading(false));
         } catch (error) {

@@ -44,7 +44,7 @@ export default function Home() {
           />
         </div>
         <Link href="/products/all-products">
-          <div className="h-12 w-[192px] text-[15px] text-[#190b72] font-medium bg-white/70 rounded bg-[#ebdafb90] tracking-wide grid place-items-center border-[#190b72] border-[#190b7210] border-2  absolute left-1/2 top-[150px] sm:top-1/2 translate-x-[-50%] translate-y-[-50%]  hover:bg-[#d1a7fc]  hover:border-0">
+          <div className="h-12 w-[192px] text-[15px] text-[#190b72] font-medium bg-white/70 bg-[#ebdafb90] tracking-wide grid place-items-center border-[#190b72] border-[#190b7210] border-2  absolute left-1/2 top-[180px] sm:top-1/2 translate-x-[-50%] translate-y-[-50%]  hover:bg-[#d1a7fc30]  ">
             Shop Collection
           </div>
         </Link>
