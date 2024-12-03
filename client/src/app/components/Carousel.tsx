@@ -128,7 +128,7 @@ export default function Carousel() {
       >
         {" "}
         <Image
-          src="/assets/svgs/chevronBlackright.svg"
+          src="/assets/svgs/chevronBlackRight.svg"
           alt="chevron arrow right"
           height={30}
           width={17}
