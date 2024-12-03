@@ -2,36 +2,59 @@
 import Image from "next/image";
 import { useRef, useEffect, useState } from "react";
 import ProductPreview from "./ProductPreview";
+import { useGetProductsQuery } from "../../lib/features/products/productSlice";
+import Spinner from "./Spinner";
+import { ProductsEdge } from "../../lib/features/products/types";
 
 export default function Carousel() {
-  const slidesArray = [1, 2, 3, 4, 5, 6, 7, 8];
+  let bestSellers = [];
+  let content;
+  const { data, isSuccess, isLoading } = useGetProductsQuery({
+    first: 8,
+    after: null,
+    before: null,
+    last: null,
+  });
+  if (isLoading) {
+    content = <Spinner />;
+  } else if (isSuccess) {
+    const {
+      products: { edges },
+    } = data;
+    bestSellers = edges;
+    content = (
+      <div id="slider" className={`shrink-0 duration-300 flex relative`}>
+        {bestSellers.map((product: ProductsEdge) => {
+          return (
+            <div key={product.node.id}>
+              <ProductPreview
+                size="fit"
+                title={product.node.title}
+                productType={product.node.productType}
+                price={product.node.priceRange.maxVariantPrice.amount}
+                profile={
+                  product.node.tags[0] +
+                  "+" +
+                  product.node.tags[1] +
+                  "+" +
+                  product.node.tags[2]
+                }
+                id={product.node.id}
+                featuredImageUrl={product.node.featuredImage.url}
+                merchandiseId={product.node.variants.nodes[0].id}
+                quantity={1}
+              />
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
 
   const [position, setPosition] = useState(0);
 
   const windowWidthRef = useRef<number>(0);
   const [windowWidth, setWindowWidth] = useState(windowWidthRef.current);
-
-  const slides = (
-    <div id="slider" className={`shrink-0 duration-300 flex relative`}>
-      {slidesArray.map((slide, index) => {
-        return (
-          <div key={index}>
-            <ProductPreview
-              size="fit"
-              title="Best Seller"
-              productType="Body Lotion"
-              price="40.00"
-              profile="Basil + Kiwi + Coriander"
-              id="1"
-              featuredImageUrl="https://cdn.shopify.com/s/files/1/0623/2168/8645/files/bottlesDouble.jpg?v=1730221070"
-              merchandiseId="111"
-              quantity={1}
-            />
-          </div>
-        );
-      })}
-    </div>
-  );
 
   function slideLeft() {
     if (position === 0) {
@@ -115,7 +138,7 @@ export default function Carousel() {
       </button>
       <div id="view-port" className="w-screen overflow-hidden">
         {" "}
-        {slides}
+        {content}
       </div>
 
       <button

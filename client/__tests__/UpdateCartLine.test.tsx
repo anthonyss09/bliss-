@@ -103,8 +103,8 @@ test("update cart line mutation", async () => {
 
   await waitFor(async () => {
     fireEvent.click(screen.getAllByText("Add to cart")[0]);
-    const testProductTitle = screen.getByText("testTitle");
-    expect(testProductTitle).toBeDefined();
+    const testProductTitle = screen.getAllByText("testTitle");
+    expect(testProductTitle[0]).toBeDefined();
     await waitFor(() => {
       const successAlert = screen.getByText("Item added to cart!");
       expect(successAlert).toBeDefined();

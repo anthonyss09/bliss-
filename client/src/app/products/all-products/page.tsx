@@ -7,7 +7,7 @@ import { getProductsArgs } from "../../../lib/features/products/types";
 import Spinner from "../../components/Spinner";
 import TryAgain from "../../components/TryAgain";
 import Link from "next/link";
-import { productEdge } from "../types";
+import { ProductsEdge } from "../../../lib/features/products/types";
 
 export default function AllProducts() {
   const [productArgs, setProductArgs] = useState<getProductsArgs>({
@@ -66,7 +66,7 @@ export default function AllProducts() {
       </div>
     );
   } else if (isSuccess) {
-    content = productEdges.map((edge: productEdge) => {
+    content = productEdges.map((edge: ProductsEdge) => {
       const { title, tags, productType, id, featuredImage, variants } =
         edge.node;
       const profile = `${tags[0]} + ${tags[1]} + ${tags[2]}`;

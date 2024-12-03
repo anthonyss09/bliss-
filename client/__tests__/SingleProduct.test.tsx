@@ -39,6 +39,7 @@ export const handlers = [
                   productType: "testProductType",
                   tags: ["tag", "tag", "tag"],
                   title: "testTitle",
+                  variants: { nodes: [{ id: "testId" }] },
                 },
               },
             ],
@@ -74,7 +75,7 @@ test("graphql client returns data and component renders data", async () => {
   );
 
   await waitFor(() => {
-    const testProductTitle = screen.getByText("testTitle");
-    expect(testProductTitle).toBeDefined();
+    const testProductTitle = screen.getAllByText("testTitle");
+    expect(testProductTitle[0]).toBeDefined();
   });
 });
