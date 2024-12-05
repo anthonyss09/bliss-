@@ -120,7 +120,7 @@ export default function AboutPage() {
               width={250}
             />
             <p>For further interest in bliss+ please reach out.</p>
-            <Link href="/products/all-products" className="w-full">
+            <Link href="/contact" className="w-full">
               <p className="h-12 w-full bg-[#B3AFFB60] hover:bg-[#B3AFFB] grid items-center text-center font-medium">
                 {" "}
                 Contact
