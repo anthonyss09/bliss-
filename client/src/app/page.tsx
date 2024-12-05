@@ -85,7 +85,7 @@ export default function Home() {
               placeat?
             </p>
             <Link href="#">
-              <div className="h-[48px] w-[128px] grid place-items-center  bg-[#d1a7fc30] hover:bg-[#d1a7fc80] bg-[#d1a7fc] md:w-1/2 shadow-md">
+              <div className="h-[48px] w-[128px] grid place-items-center  bg-[#d1a7fc30] hover:bg-[#B3AFFB90] md:w-1/2 shadow-md">
                 <p className="font-medium text-[15px] text-[#190b72]">
                   Learn More
                 </p>
@@ -151,7 +151,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="bg-[#ebdafb] p-16 mb-12 flex flex-col md:flex-row md:items-center lg:mx-24">
+        <section className="bg-[#d1a7fc30] p-16 mb-12 flex flex-col md:flex-row md:items-center lg:mx-24">
           <div className="w-[166px] h-[111px] relative mx-auto mb-8 sm:h-[150px] sm:w-[200px] md:h-[129px] md:w-[192px] lg:h-[161.25px] md:w-[240px]">
             <Image
               src="/assets/images/basil.png"
@@ -166,8 +166,8 @@ export default function Home() {
               We cherish our relationship with the environment. Learn about our
               commitment to sustainability.
             </p>
-            <Link href="#">
-              <div className="h-12 w-[192px] w-full bg-[#d1a7fc] grid place-items-center mr-auto shadow-md">
+            <Link href="/about">
+              <div className="h-12 w-[192px] w-full bg-[#B3AFFB] grid place-items-center mr-auto shadow-md">
                 {" "}
                 <p className="font-bold text-base text-white text-right">
                   Learn More

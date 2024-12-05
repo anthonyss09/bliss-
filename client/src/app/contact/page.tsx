@@ -74,7 +74,7 @@ export default function Contact() {
         <h3 className="text-xl mb-4">
           We are looking forward to hearing from you.
         </h3>
-        <div className="h-12 w-full bg-[#00000010] mb-12 rounded-[48px]">
+        <div className="h-12 w-full bg-[#0f7e7e20] mb-12 rounded-[48px]">
           {" "}
           <Image
             src="/assets/images/basil.png"
