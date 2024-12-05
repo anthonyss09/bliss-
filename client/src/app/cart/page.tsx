@@ -81,9 +81,9 @@ export default function CartPage() {
           </div>
         </section>
       </main>
-      <div className="h-[178px] w-full relative md:row-start-3">
+      <div className="h-[140px] w-full relative md:row-start-3">
         <Image
-          src="/assets/images/serumGreenBG.jpeg"
+          src="/assets/images/colors.jpeg"
           alt="bliss serum"
           fill
           className="px-4 sm:px-8"

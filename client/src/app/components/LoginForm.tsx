@@ -166,7 +166,7 @@ export default function LoginForm({
 
         <div
           id="form-login-body"
-          className={`mx-4 mb-8 flex flex-col justify-center border-[#00000010] ${
+          className={`min-h-[345px] mx-4 mb-8 flex flex-col justify-between border-[#00000010] ${
             !isLogin ? "" : ""
           }`}
         >
@@ -198,7 +198,7 @@ export default function LoginForm({
           />
           <div className="w-full flex justify-center">
             {" "}
-            <button className="h-12 w-full mt-4 bg-[#3111f330] text-black font-medium tracking-wide shadow-sm sm:w-[352px] hover:bg-[#3111f370] hover:text-white">
+            <button className="h-12 w-full mt-4 bg-[#3111f330] text-black font-medium tracking-wide shadow-sm hover:bg-[#3111f370] hover:text-white">
               {isLogin ? "Login" : "Register"}
             </button>
           </div>

@@ -105,7 +105,7 @@ export default function Contact() {
             <div className="p-2 bg-[#00000005] grid items-center focus-within:shadow-sm">
               <textarea
                 id="message-contact"
-                className="w-full border-2 border-[#2b9df060] pl-2  shadow-sm outline-[#2b9df0] rounded-lg resize-none"
+                className="w-full border-2 border-[#2b9df040] pl-2  shadow-sm outline-[#2b9df0] rounded-lg resize-none"
                 rows={5}
                 onChange={handleInputChange}
                 value={message}

@@ -1,6 +1,9 @@
 import Image from "next/image";
 import Logo from "./Logo";
 import BsMainItem from "./BSMainItem";
+import Link from "next/link";
+import { selectCartData } from "../../lib/features/cart/cartSlice";
+import { useAppSelector } from "../../lib/hooks";
 
 export default function BigSidebar({
   sidebarDropped,
@@ -13,6 +16,7 @@ export default function BigSidebar({
   formOpen: boolean;
   toggleForm: (bool: boolean) => void;
 }) {
+  const { cartCount } = useAppSelector(selectCartData);
   return (
     <aside
       id="big-sidebar"
@@ -21,7 +25,7 @@ export default function BigSidebar({
       } ${formOpen ? " w-screen" : "w-[212px]"}`}
     >
       <button
-        className=" mt-4  p-2 text-xl font-semibold bg-[#00000020] hover:bg-[#00000010]"
+        className=" mt-4  p-2 text-xl font-semibold bg-[#00000010] hover:bg-[#00000020]"
         onClick={() => {
           toggleSidebar(!sidebarDropped);
           toggleForm(false);
@@ -36,19 +40,44 @@ export default function BigSidebar({
       </button>{" "}
       <div
         id="sidebar-header"
-        className="h-20 flex justify-center items-center bg-[#bed3fb] bg-white border-t-2 border-t-[#00000005]"
+        className={`h-20 p-4 flex items-center bg-[#bed3fb] bg-white border-t-2 border-t-[#00000005] ${
+          formOpen ? "justify-between" : "justify-center"
+        }`}
       >
-        <Logo toggleSidebar={toggleSidebar} />
-        {/* <div className="px-4 bg-white">
+        {formOpen && (
+          <button
+            onClick={() => {
+              toggleSidebar(!sidebarDropped);
+            }}
+            className="z-20 bg-white"
+          >
+            <Image
+              src="/assets/svgs/bars.svg"
+              alt="menu bars"
+              height={30}
+              width={30}
+              className=" sm:hidden"
+            />
+          </button>
+        )}
+        <div>
           {" "}
-          <Image
-            height={64}
-            width={64}
-            src="/assets/images/blissFlower.jpeg"
-            alt="jasmine flower"
-            className={`${formOpen ? "" : ""}`}
-          />
-        </div> */}
+          <Logo toggleSidebar={toggleSidebar} />
+        </div>
+        {formOpen && (
+          <Link href="/cart" className="relative">
+            <div className="h-[20px] w-[20px] absolute top-[-16px] left-[12px] font-bold sm:hidden bg-[#190b72] text-white text-xs grid place-items-center rounded-xl shadow-sm">
+              {cartCount}
+            </div>
+            <Image
+              src="/assets/svgs/cart.svg"
+              alt="cart icon"
+              height={28}
+              width={28}
+              className="sm:hidden"
+            />
+          </Link>
+        )}
       </div>
       <div
         id="sidebar-taskbar"
@@ -59,7 +88,7 @@ export default function BigSidebar({
           onClick={() => {
             toggleForm(!formOpen);
           }}
-          className={`h-16 w-[128px] font-semibold text-left pl-4 text-white tracking-wide duration-500 ${
+          className={`h-16 w-[128px] font-semibold text-center text-white tracking-wide duration-500 ${
             formOpen ? "bg-[#3111f3]" : "bg-[#3111f3]"
           }`}
         >
@@ -70,7 +99,7 @@ export default function BigSidebar({
             toggleForm(!formOpen);
           }}
           className={`w-[128px] h-12 flex items-center ${
-            formOpen ? "justify-end pr-6" : "justify-end pr-6"
+            formOpen ? "justify-end pr-4" : "justify-end pr-6"
           }`}
         >
           <Image
@@ -83,7 +112,7 @@ export default function BigSidebar({
         </button>
       </div>
       <ul
-        className={`flex flex-col items-center justify-center gap-8 duration-300 ease-in-out  ${
+        className={`flex flex-col items-center justify-center gap-8 duration-300 ease-in-out  px-4 ${
           formOpen ? "w-0 overflow-hidden" : ""
         }`}
       >

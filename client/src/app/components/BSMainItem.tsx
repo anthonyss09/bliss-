@@ -14,9 +14,9 @@ export default function BsMainItem({
   const pathname = usePathname();
   return (
     <li
-      className={`h-16 w-[192px] w-full pl-0 flex items-center hover:bg-[#3111f310] hover:pr-8 duration-300 border-t-0 border-b-0 border-[#00000005] ${
+      className={`h-16 w-[192px] w-full pl-0 flex items-center hover:bg-[#3111f310] hover:pr-8 duration-300 border-t-0 border-b-0 border-[#00000005] rounded ${
         pathname === `${path}`
-          ? "bg-[#3111f310]  justify-start pl-20"
+          ? "bg-[#0f7e7e10]  justify-start pl-20"
           : "justify-center"
       }`}
       onClick={() => {

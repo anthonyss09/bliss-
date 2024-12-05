@@ -21,7 +21,7 @@ export default function FormRow({
         <input
           type={inputType}
           id={id}
-          className="h-10 w-full border-2 border-[#2b9df060] pl-2 rounded-[48px] shadow-sm outline-[#2b9df0]"
+          className="h-10 w-full border-2 border-[#2b9df040] pl-2 rounded-[48px] shadow-sm outline-[#2b9df0]"
           onChange={onChange}
           value={value}
         />

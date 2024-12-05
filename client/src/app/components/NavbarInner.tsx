@@ -42,7 +42,7 @@ export default function NavbarInner({
       </button>
       <Logo toggleSidebar={toggleSidebar} />
       <Link href="/cart" className="relative">
-        <div className="h-[20px] w-[20px] absolute top-[-16px] left-[12px] font-bold sm:hidden bg-[#ebdafb] text-xs grid place-items-center rounded-xl shadow-sm">
+        <div className="h-[20px] w-[20px] absolute top-[-16px] left-[12px] font-bold sm:hidden bg-[#190b72] text-white text-xs grid place-items-center rounded-xl shadow-sm">
           {cartCount}
         </div>
         <Image
@@ -58,7 +58,7 @@ export default function NavbarInner({
 
         <NavLink name="Shop" path="/products/all-products" />
         <Link href="/cart" className="relative">
-          <div className="h-[18px] w-[18px] absolute top-[-16px] left-[12px] font-semibold text-sm bg-[#ebdafb] text-xs grid place-items-center rounded-xl shadow-sm">
+          <div className="h-[18px] w-[18px] absolute top-[-16px] left-[12px] font-semibold text-sm bg-[#190b72] text-white text-xs grid place-items-center rounded-xl shadow-sm">
             {cartCount}
           </div>
           <Image
