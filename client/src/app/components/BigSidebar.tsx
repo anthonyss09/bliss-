@@ -65,7 +65,7 @@ export default function BigSidebar({
           <Logo toggleSidebar={toggleSidebar} />
         </div>
         {formOpen && (
-          <Link href="/cart">
+          <Link href="/cart" className="relative">
             <div className="h-[20px] w-[20px] absolute top-[-16px] left-[12px] font-bold sm:hidden bg-[#190b72] text-white text-xs grid place-items-center rounded-xl shadow-sm">
               {cartCount}
             </div>
