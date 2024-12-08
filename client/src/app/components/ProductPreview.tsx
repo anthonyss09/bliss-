@@ -66,7 +66,7 @@ export default function ProductPreview({
   } = cartData;
 
   return (
-    <aside className={`${fit ? "w-[50vw] md:w-[25vw]" : "w-[125px]"}`}>
+    <aside className={`bg-white ${fit ? "w-[50vw] md:w-[25vw]" : "w-[125px]"}`}>
       {pathname !== "/cart" && (
         <button
           onClick={() => {

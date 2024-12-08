@@ -57,7 +57,7 @@ export default function Contact() {
   }
 
   return (
-    <div className="min-h-[440px] mt-24 border-b-[#00000005] border-b-4 mb-4 sm:mt-32 md:grid md:grid-cols-2 md:grid-rows-2 md:mt-36">
+    <div className="min-h-[70vh] mt-24 border-b-[#00000005] border-b-4 mb-4 sm:mt-32 md:grid md:grid-cols-2 md:grid-rows-2 md:mt-36">
       {isLoading && <Spinner />}
 
       <header className="mx-4 sm:mx-8 md:mx-0 md:row-start-1 md:pl-8">

@@ -49,7 +49,7 @@ export default function CartPage() {
     }
   } else {
     content = (
-      <div className="my-auto mx-auto">
+      <div className="my-auto mx-auto ">
         <p className="font-medium mb-4">No items in Cart.</p>
         <Link href="/products/all-products">
           <div className="h-12 w-32 border-2 bg-white border-blue-dark mx-auto grid place-items-center tracking-wide text-sm font-semibold hover:bg-black hover:border-0 hover:text-white">
@@ -61,7 +61,7 @@ export default function CartPage() {
   }
 
   return (
-    <div className=" mt-24 sm:mt-32 border-b-[#00000010] border-b-4 pb-8 mb-4 md:grid md:grid-cols-2 md:grid-rows-3 md:h-[600px] relative">
+    <div className="mt-24 sm:mt-32 border-[#00000010] border-t-4 border-b-4 py-8 mb-4 md:grid md:grid-cols-2 md:grid-rows-3 md:h-[600px] relative">
       {cartCount > 0 && (
         <CartHeader
           cartCount={cartCount}
@@ -73,15 +73,27 @@ export default function CartPage() {
       )}
       <main>
         <section className="mx-4 sm:mx-8  md:h-[550px] md:mx-0 md:mr-8">
-          <p className="mb-4 text-sm font-medium text-black/70  tracking-wide duration-100 sm:text-base">
+          <p
+            className={`mb-4 text-sm font-medium text-black/70  tracking-wide duration-100 sm:text-base ${
+              cartCount === 0 ? "ml-8" : ""
+            }`}
+          >
             Items
           </p>
-          <div className="min-h-[300px] flex flex-wrap justify-around gap-12 mb-8 py-4 border-b-2 border-t-2 border-[#00000010] md:py-4 md:border-b-[3px] md:border-t-[3px] md:h-[515px] md:overflow-scroll">
+          <div
+            className={`min-h-[300px] flex flex-wrap justify-around gap-12 mb-8 py-4 border-b-0 border-t-0 border-[#00000010] md:py-4 md:border-b-0 md:border-t-0 md:h-[515px] md:overflow-scroll  ${
+              cartCount === 0 ? "w-screen" : ""
+            }`}
+          >
             {content}
           </div>
         </section>
       </main>
-      <div className="h-[140px] w-full relative md:row-start-3">
+      <div
+        className={`h-[140px] w-full relative md:row-start-3 ${
+          cartCount === 0 ? "md:ml-[50%]" : ""
+        }`}
+      >
         <Image
           src="/assets/images/colors.jpeg"
           alt="bliss serum"

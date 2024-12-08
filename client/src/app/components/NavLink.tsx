@@ -9,14 +9,15 @@ export default function NavLink({
   path: string;
 }) {
   const pathname = usePathname();
+  console.log(pathname);
 
   return (
     <Link
       href={`${path}`}
-      className={`h-8 w-24 font-medium tracking-wide grid place-items-center ${
-        pathname === `/${path}`
-          ? "bg-[#3111f310] rounded-2xl font-semibold shadow-sm"
-          : ""
+      className={`h-8 w-24 font-medium tracking-wide grid place-items-center duration-300 ${
+        pathname === `${path}`
+          ? "bg-[#190b7220]  text-white shadow-sm"
+          : "hover:bg-[#190b7220] hover:text-white "
       }`}
     >
       {name}
