@@ -55,7 +55,7 @@ export default function AboutPage() {
 
         <section className="p-8 mb-8 md:flex md:flex-col md:items-center bg-[#00000010]">
           <div
-            className={`h-[140px] w-full mb-12 relative  sm:h-[180px] md:h-[140px] md:w-1/2 `}
+            className={`h-[120px] w-full mb-12 relative  sm:h-[180px] md:h-[140px] md:w-1/2 `}
           >
             <Image
               src="/assets/images/colors.jpeg"
