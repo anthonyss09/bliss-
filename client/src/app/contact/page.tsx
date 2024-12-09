@@ -124,7 +124,7 @@ export default function Contact() {
           </div>
         </form>
       </main>
-      {/* <div className="w-0 h-0 overflow-hidden sm:w-full sm:h-[200px]">
+      <div className="w-0 h-0 overflow-hidden sm:w-full sm:h-[200px]">
         {" "}
         <Image
           src="/assets/images/blissBottles.jpeg"
@@ -133,7 +133,7 @@ export default function Contact() {
           width={300}
           className="mx-auto md:col-start-1 md:row-start-2"
         />
-      </div> */}
+      </div>
     </div>
   );
 }
