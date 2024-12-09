@@ -61,7 +61,7 @@ export default function Home() {
         >
           <div
             id="serum-green-image"
-            className={`h-[140px] w-full mb-12 relative  sm:h-[180px] md:h-[140px] md:w-1/2 `}
+            className={`h-[140px] w-full mb-12 relative  sm:h-[180px] md:h-[140px] md:w-1/2 md:my-20 lg:h-[180px]`}
           >
             <Image
               src="/assets/images/colors.jpeg"
@@ -73,16 +73,15 @@ export default function Home() {
           </div>
           <div
             id="div-about"
-            className=" flex flex-col justify-center md:w-1/2 md:px-8 md:mb-8 "
+            className=" flex flex-col justify-center md:w-1/2 md:px-8 "
           >
             {" "}
             <h3 className="font-medium mb-4  text-xl sm:text-2xl">
               How does bliss+ approach skin wellness?
             </h3>
             <p className="font-light  text-[15px] mb-8 sm:text-lg">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eius
-              dicta delectus harum maxime in at nemo commodi inventore eum
-              placeat?
+              Our greatest state of being is bliss, but on a daily basis we
+              might benefit from a little more.
             </p>
             <Link href="#">
               <div className="h-[48px] w-[128px] grid place-items-center  bg-[#d1a7fc30] hover:bg-[#B3AFFB90] md:w-1/2 shadow-md">
@@ -96,8 +95,8 @@ export default function Home() {
 
         <section
           id="section-images"
-          className={`mb-8 md:flex md:rows duration-500 ease-in-out ${
-            brightBlueBG ? "bg-[#2b9df0]" : "bg-white"
+          className={`mb-8 md:flex md:rows md:mx-16 duration-500 ease-in-out md:shadow-lg ${
+            brightBlueBG ? "bg-[#2b9df0] md:bg-white" : "bg-white"
           }`}
         >
           {" "}

@@ -11,10 +11,10 @@ export default function AboutPage() {
           through skincare.
         </p>
       </header>
-      <main className="mb-4 border-b-4 border-b-[#00000010] flex flex-col gap-8">
-        <section className="mb-8 md:flex">
+      <main className="mb-4 border-b-4 flex flex-col gap-8">
+        <section className="mb-8 md:flex md:items-end">
           <div className="md:w-1/2 p-4 pb-0">
-            <div className="h-16 mb-4 px-4 bg-[#B3AFFB90] rounded-[24px] grid items-center">
+            <div className="h-16 mb-4 px-4 bg-[#B3AFFB90] grid items-center">
               <p>How does bliss+ approach skin wellness?</p>
             </div>
             <div className="py-4">
@@ -56,7 +56,7 @@ export default function AboutPage() {
 
         <section className="p-8 mb-8 md:flex md:flex-col md:items-center bg-[#00000010]">
           <div
-            className={`h-[120px] w-full mb-12 relative  sm:h-[180px] md:h-[140px] md:w-1/2 `}
+            className={`h-[120px] w-full mb-12 relative  sm:h-[180px] md:h-[140px] md:w-1/2 shadow-xl`}
           >
             <Image
               src="/assets/images/colors.jpeg"
@@ -66,7 +66,7 @@ export default function AboutPage() {
             />
           </div>
           <div className="md:w-1/2">
-            <div className="h-16 mb-4 px-4 bg-[#2B9DF060] rounded-[24px] grid items-center">
+            <div className="h-16 mb-4 px-4 bg-[#2B9DF060] grid items-center">
               <p>How does bliss+ approach product development?</p>
             </div>
 
@@ -90,7 +90,7 @@ export default function AboutPage() {
 
         <section className="mb-8 md:flex md:items-center ">
           <div className="mb-8 md:w-1/2 md:p-4">
-            <div className="h-16 mb-4 px-4 bg-[#D1A7FC] rounded-[24px] grid items-center">
+            <div className="h-16 mb-4 px-4 bg-[#D1A7FC] grid items-center">
               <p className="text-white">
                 How does bliss+ honor our commitment to the environment?
               </p>
@@ -122,9 +122,7 @@ export default function AboutPage() {
               height={250}
               width={250}
             />
-            <p className="w-[256px] text-center">
-              For further interest in bliss+ please reach out.
-            </p>
+            <p className="w-[256px] text-center">Have any questions?</p>
             <Link href="/contact" className="w-full">
               <p className="h-12 w-[256px] mx-auto bg-[#B3AFFB60] hover:bg-[#B3AFFB] grid items-center text-center font-medium">
                 {" "}

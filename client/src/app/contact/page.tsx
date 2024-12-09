@@ -60,7 +60,7 @@ export default function Contact() {
     <div className="min-h-[70vh] mt-24 border-b-[#00000005] border-b-4 mb-4 sm:mt-32 md:grid md:grid-cols-2 md:grid-rows-2 md:mt-36">
       {isLoading && <Spinner />}
 
-      <header className="mx-4 sm:mx-8 md:mx-0 md:row-start-1 md:pl-8">
+      <header className="mx-4 sm:w-full sm:px-12 md:row-start-1 md:pl-8 md:w-[400px]">
         <p className="mb-8 text-sm font-medium sm:text-sm tracking-wide sm:font-light">
           <Link
             href="/"
@@ -71,8 +71,8 @@ export default function Contact() {
           / Contact
         </p>
 
-        <h3 className="text-xl mb-4">
-          We are looking forward to hearing from you.
+        <h3 className="text-base  mb-4 font-light  text-[#190b72]">
+          We&apos;re looking forward to hearing from you!
         </h3>
         <div className="h-12 w-full bg-[#0f7e7e20] mb-12 rounded-[48px]">
           {" "}
@@ -86,15 +86,19 @@ export default function Contact() {
       </header>
 
       <main className="md:col-start-2 md:row-start-1 md:row-span-2 md:my-auto">
-        <form className="px-4 sm:px-8" onSubmit={handleSubmit}>
-          <FormRow
-            name="Email"
-            id="email-contact"
-            inputType="email"
-            onChange={handleInputChange}
-            value={email}
-          />
-          <div className="mb-4 mt-4">
+        <form className=" pt-4 bg-[#00000005]  md:mr-8" onSubmit={handleSubmit}>
+          <div className="mx-4">
+            {" "}
+            <FormRow
+              name="Email"
+              id="email-contact"
+              inputType="email"
+              onChange={handleInputChange}
+              value={email}
+            />
+          </div>
+
+          <div className="mx-4 mb-4 mt-4">
             {" "}
             <label
               htmlFor="message-contact"
@@ -102,17 +106,17 @@ export default function Contact() {
             >
               Message
             </label>
-            <div className="p-2 bg-[#00000005] grid items-center focus-within:shadow-sm">
+            <div className="p-2  grid items-center focus-within:shadow-sm">
               <textarea
                 id="message-contact"
-                className="w-full border-2 border-[#2b9df040] pl-2  shadow-sm outline-[#2b9df0] rounded-lg resize-none"
+                className="w-full border-2 border-[#2b9df040] pl-2  shadow-sm outline-[#2b9df0] rounded-[4px] resize-none"
                 rows={5}
                 onChange={handleInputChange}
                 value={message}
               />
             </div>
           </div>
-          <div className="p-2">
+          <div className="w-full p-4 px-6 md:px-0 bg-white">
             {" "}
             <button className="h-12 w-full bg-[#3111f330] tracking-wide font-medium rounded-sm hover:bg-[#3111f370] hover:text-white">
               Send
@@ -120,13 +124,16 @@ export default function Contact() {
           </div>
         </form>
       </main>
-      <Image
-        src="/assets/images/blissBottles.jpeg"
-        alt="bliss bottles"
-        height={200}
-        width={300}
-        className="mx-auto md:col-start-1 md:row-start-2"
-      />
+      {/* <div className="w-0 h-0 overflow-hidden sm:w-full sm:h-[200px]">
+        {" "}
+        <Image
+          src="/assets/images/blissBottles.jpeg"
+          alt="bliss bottles"
+          height={200}
+          width={300}
+          className="mx-auto md:col-start-1 md:row-start-2"
+        />
+      </div> */}
     </div>
   );
 }

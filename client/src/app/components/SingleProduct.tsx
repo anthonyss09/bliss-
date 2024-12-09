@@ -53,7 +53,9 @@ export default function SingleProduct({ product }: Props) {
   console.log("the edges", cartEdges);
 
   return (
-    <aside className={`sm:flex sm:items-center sm:gap-12 `}>
+    <div
+      className={`w-full sm:flex sm:w-screen sm:justify-center sm:items-center sm:gap-12 sm:my-4`}
+    >
       <div className={`w-[300px] h-[300px] relative`}>
         {" "}
         <Image
@@ -64,7 +66,7 @@ export default function SingleProduct({ product }: Props) {
           sizes="(min-width:768px)  25vw,(min-width:1024px) 25vw, 300px"
         />
       </div>
-      <div className="flex flex-col sm:w-[300px]">
+      <div className="flex flex-col sm:h-[300px] sm:w-[400px] sm:w-full sm:p-8 sm:bg-[#00000005]">
         {" "}
         <h3 className={`font-medium text-lg mb-2`}>{product.title}</h3>
         <p className={`font-medium text-sm mb-2 text-black/70`}>
@@ -94,6 +96,6 @@ export default function SingleProduct({ product }: Props) {
           Add to cart
         </button>
       </div>
-    </aside>
+    </div>
   );
 }
