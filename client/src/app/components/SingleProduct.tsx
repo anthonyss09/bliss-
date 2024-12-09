@@ -66,7 +66,7 @@ export default function SingleProduct({ product }: Props) {
           sizes="(min-width:768px)  25vw,(min-width:1024px) 25vw, 300px"
         />
       </div>
-      <div className="flex flex-col sm:h-[300px] sm:w-[400px] sm:w-full sm:p-8 sm:bg-[#00000005]">
+      <div className="flex flex-col sm:h-[300px] sm:w-[400px] sm:p-8 sm:bg-[#00000005]">
         {" "}
         <h3 className={`font-medium text-lg mb-2`}>{product.title}</h3>
         <p className={`font-medium text-sm mb-2 text-black/70`}>
