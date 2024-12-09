@@ -139,7 +139,11 @@ export default function Navbar() {
         className={`w-screen fixed top-0 z-30  bg-white duration-700 ease-in-out`}
       >
         {customer.id ? (
-          <AccountCenter formOpen={formOpen} toggleSidebar={toggleSidebar} />
+          <AccountCenter
+            formOpen={formOpen}
+            toggleSidebar={toggleSidebar}
+            toggleForm={toggleForm}
+          />
         ) : (
           <LoginForm formOpen={formOpen} toggleForm={toggleForm} />
         )}

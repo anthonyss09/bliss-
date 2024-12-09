@@ -7,13 +7,16 @@ import {
   setCartData,
   setCartCount,
 } from "../../lib/features/cart/cartSlice";
+import Image from "next/image";
 
 export default function AccountCenter({
   formOpen,
   toggleSidebar,
+  toggleForm,
 }: {
   formOpen: boolean;
   toggleSidebar: (bool: boolean) => void;
+  toggleForm: (bool: boolean) => void;
 }) {
   const dispatch = useAppDispatch();
   const { customer } = useAppSelector(selectAuthData);
@@ -37,12 +40,27 @@ export default function AccountCenter({
 
   return (
     <aside
-      className={`pb-24 mb-4 mt-0 left-0 absolute duration-500 ease-in-out bg-white flex flex-col z-[60] top-[216px] sm:pt-8 sm:pb-8 sm:top-[80px] sm:shadow-2xl sm:border-[2px] sm:border-[#3111f310] sm:rounded-xl ${
+      className={`pb-24 mb-4 mt-0 left-0 absolute duration-500 ease-in-out bg-white flex flex-col z-[60] top-[216px]  sm:pb-8 sm:top-[80px] sm:shadow-2xl sm:border-[2px] sm:border-[#3111f310]  ${
         formOpen
           ? "h-[480px] overflow-y-scroll w-full sm:h-fit sm:w-[500px] translate-x-0 sm:ml-[50%] sm:translate-x-[-50%]  sm:fixed sm:overflow-auto"
           : "z-[-10] translate-x-[-500px]"
       }`}
     >
+      <button
+        type="button"
+        className="hidden h-12 w-12 bg-white z-[60] place-items-center sm:grid"
+        onClick={() => {
+          toggleForm(false);
+        }}
+      >
+        {" "}
+        <Image
+          height={20}
+          width={20}
+          src="/assets/svgs/closeX.svg"
+          alt="close button"
+        />
+      </button>
       <div>
         <h3 className="h-16 px-4 bg-[#3111f310]  font-medium text-lg flex items-center sm:bg-[#3111f370] sm:px-8">
           Account Center
