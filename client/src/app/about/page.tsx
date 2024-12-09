@@ -3,8 +3,8 @@ import Link from "next/link";
 
 export default function AboutPage() {
   return (
-    <div className="mt-32 px-8">
-      <header className="mb-12">
+    <div className="mt-28 px-4 md:px-8">
+      <header className="mb-4">
         {" "}
         <p className="w-[300px] ml-[50%] translate-x-[-50%] z-20 text-center font-extralight text-[#190b72] text-2xl">
           Find bliss<span className="text-[#3111f3] font-light">+</span> more
@@ -13,28 +13,29 @@ export default function AboutPage() {
       </header>
       <main className="mb-4 border-b-4 border-b-[#00000010] flex flex-col gap-8">
         <section className="mb-8 md:flex">
-          <div className="md:w-1/2 p-4">
+          <div className="md:w-1/2 p-4 pb-0">
             <div className="h-16 mb-4 px-4 bg-[#B3AFFB90] rounded-[24px] grid items-center">
               <p>How does bliss+ approach skin wellness?</p>
             </div>
-
-            <p className="px-4 font-light text-sm text-black">
-              {" "}
-              Our greatest state of being is bliss, but on a daily basis we
-              might benefit from a little more.
-              <br />
-              <br />
-              On occasion we might strive for Focus, on another a boost of
-              Confidence.
-              <br />
-              <br />
-              That&apos;s why bliss+ approaches skin wellness comprehensively,
-              taking into account our state of being as a whole. Each one of our
-              products has an energy and intention behind it&apos;s development
-              to meet your daily needs.
-            </p>
+            <div className="py-4">
+              <p className="px-4 font-light text-sm text-black">
+                {" "}
+                Our greatest state of being is bliss, but on a daily basis we
+                might benefit from a little more.
+                <br />
+                <br />
+                On occasion we might strive for Focus, on another a boost of
+                Confidence.
+                <br />
+                <br />
+                That&apos;s why bliss+ approaches skin wellness comprehensively,
+                taking into account our state of being as a whole. Each one of
+                our products has an energy and intention behind it&apos;s
+                development to meet your daily needs.
+              </p>
+            </div>
           </div>
-          <div className="md:w-1/2 p-4">
+          <div className="md:w-1/2 p-4 py-0">
             {" "}
             <div className="h-[200px] w-full relative sm:h-[320px] md:h-[200px]  lg:mx-auto">
               <Image
@@ -69,7 +70,7 @@ export default function AboutPage() {
               <p>How does bliss+ approach product development?</p>
             </div>
 
-            <p className="px-4 font-light text-sm text-black">
+            <p className="px-4 py-4 font-light text-sm text-black">
               {" "}
               Our greatest state of being is bliss, but on a daily basis we
               might benefit from a little more.
@@ -94,22 +95,24 @@ export default function AboutPage() {
                 How does bliss+ honor our commitment to the environment?
               </p>
             </div>
-
-            <p className="px-4 font-light text-sm text-black">
+            <div className="py-4">
               {" "}
-              Our greatest state of being is bliss, but on a daily basis we
-              might benefit from a little more.
-              <br />
-              <br />
-              On occasion we might strive for Focus, on another a boost of
-              Confidence.
-              <br />
-              <br />
-              That&apos;s why bliss+ approaches skin wellness comprehensively,
-              taking into account our state of being as a whole. Each one of our
-              products has an energy and intention behind it&apos;s development
-              to meet your daily needs.
-            </p>
+              <p className="px-4 font-light text-sm text-black">
+                {" "}
+                Our greatest state of being is bliss, but on a daily basis we
+                might benefit from a little more.
+                <br />
+                <br />
+                On occasion we might strive for Focus, on another a boost of
+                Confidence.
+                <br />
+                <br />
+                That&apos;s why bliss+ approaches skin wellness comprehensively,
+                taking into account our state of being as a whole. Each one of
+                our products has an energy and intention behind it&apos;s
+                development to meet your daily needs.
+              </p>
+            </div>
           </div>
           <div className="p-8 flex flex-col justify-center items-center gap-4 bg-[#B3AFFB10] md:w-1/2 ">
             {" "}
