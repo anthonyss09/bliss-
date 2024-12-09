@@ -13,17 +13,17 @@ export default function BsMainItem({
 }) {
   const pathname = usePathname();
   return (
-    <li
-      className={`h-16 w-[192px] w-full pl-0 flex items-center hover:bg-[#0f7e7e10] hover:pr-8 duration-300 border-t-0 border-b-0 border-[#00000005] rounded ${
-        pathname === `${path}`
-          ? "bg-[#0f7e7e10]  justify-start pl-20"
-          : "justify-center"
-      }`}
-      onClick={() => {
-        toggleSidebar(false);
-      }}
-    >
-      <Link href={`${path}`} className={`flex items-center gap-4 `}>
+    <Link href={`${path}`} className={`flex items-center gap-4 w-[192px]`}>
+      <li
+        className={`h-16 w-[192px] w-full pl-0 flex gap-4 items-center hover:bg-[#0f7e7e10] hover:pr-8 duration-300 border-t-0 border-b-0 border-[#00000005] rounded ${
+          pathname === `${path}`
+            ? "bg-[#0f7e7e10]  justify-start pl-20"
+            : "justify-center"
+        }`}
+        onClick={() => {
+          toggleSidebar(false);
+        }}
+      >
         <p
           className={`font-semibold text-black tracking-wide text-base ${
             pathname === `${path}` ? "" : ""
@@ -40,7 +40,7 @@ export default function BsMainItem({
             className="h-[16px] w-[auto]"
           />
         )}
-      </Link>
-    </li>
+      </li>
+    </Link>
   );
 }
